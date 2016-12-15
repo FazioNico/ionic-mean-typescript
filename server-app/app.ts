@@ -27,6 +27,7 @@ export class Server{
     this.ObjectID = mongodb.ObjectID; // Used in API endpoints
     this.app = express() //create expressjs application
     this.config() //configure application
+    this.dbConnect() // connect to mongodb
     this.routes() //configure routes
   }
 
@@ -48,12 +49,39 @@ export class Server{
     });
   }
 
+  dbConnect(){
+    // Initialize database connection and then start the server.
+    this.mongoClient.connect(MONGODB_URI, (err, database)=> {
+      if (err) {
+        console.log('Error mongoClient.connect() -> ', err)
+        /*
+          // Dont've types fro $process
+          process.exit(1);
+        */
+        //process.exit(1);
+      }
+      else {
+        this.db = database; // Our database object from mLab
+        console.log("Database connection ready");
+      }
+
+    });
+  }
+
+  catchDbError(res){
+    if(!this.db){
+      this.handleError(res, 'MongoDB not connect', "MongoDB not connect: Failed to get data", '404');
+      return false
+    }
+  }
+
   routes(){
     //let routes = new Routes(this.app,this.db,this.ObjectID);
     /*
     * Endpoint --> "/api/todos"
     */
     this.app.get("/api/todos", (req, res)=> {
+      this.catchDbError(res)
       this.db.collection("todos").find({}).toArray((err, docs)=> {
         if (err) {
           this.handleError(res, err.message, "Failed to get todos");
@@ -62,8 +90,10 @@ export class Server{
         }
       });
     });
+
     // POST: create a new todo
     this.app.post("/api/todos", (req, res)=> {
+      this.catchDbError(res);
       let newTodo = {
         description: req.body.description,
         isComplete: false
@@ -82,6 +112,7 @@ export class Server{
      */
      // GET: retrieve a todo by id -- Note, not used on front-end
      this.app.get("/api/todos/:id", (req, res)=> {
+       this.catchDbError(res);
        this.db.collection("todos").findOne({ _id: new this.ObjectID(req.params.id) }, (err, doc)=> {
          if (err) {
            this.handleError(res, err.message, "Failed to get todo by _id");
@@ -92,6 +123,7 @@ export class Server{
      });
      // PUT: update a todo by id
      this.app.put("/api/todos/:id", (req, res)=> {
+       this.catchDbError(res);
        let updateTodo = req.body;
        delete updateTodo._id;
 
@@ -105,6 +137,7 @@ export class Server{
      });
      // DELETE: delete a todo by id
      this.app.delete("/api/todos/:id", (req, res)=> {
+       this.catchDbError(res);
        this.db.collection("todos").deleteOne({_id: new this.ObjectID(req.params.id)}, (err, result)=> {
          if (err) {
            this.handleError(res, err.message, "Failed to delete todo");
@@ -125,22 +158,9 @@ export class Server{
   }
 
   bootstrap(){
-    // Initialize database connection and then start the server.
-    this.mongoClient.connect(MONGODB_URI, (err, database)=> {
-      if (err) {
-        console.log('Error mongoClient.connect() -> ', err)
-      /*
-        // Dont've types fro $process
-        process.exit(1);
-      */
-      process.exit(1);
-      }
-      this.db = database; // Our database object from mLab
-      console.log("Database connection ready");
-      // Initialize the app.
-      this.app.listen(this.app.get('port'), ()=> {
-        console.log("You're a wizard, Harry. I'm a what? Yes, a wizard, on port", this.app.get('port'));
-      });
+    // Initialize the app.
+    this.app.listen(this.app.get('port'), ()=> {
+      console.log("You're a wizard, Harry. I'm a what? Yes, a wizard, on port", this.app.get('port'));
     });
   }
 }
