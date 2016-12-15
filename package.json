@@ -3,6 +3,7 @@
   "author": "Nicolas Fazio",
   "homepage": "http://nicolasfazio.ch/",
   "private": true,
+  "main": "server.js",
   "scripts": {
     "server": "ntsc server.ts",
     "postserver": "node server.js",
