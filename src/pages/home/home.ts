@@ -32,7 +32,10 @@ export class HomePage {
         .subscribe(data => {
           console.log('load data->', data)
           this.todos = data;
-        })
+        },
+      err => {
+        console.log('Observable Error-> ' ,err)
+      })
   }
 
   addTodo(todo:string) {
@@ -49,6 +52,9 @@ export class HomePage {
     this.todoService.update(todo)
         .subscribe(data => {
           todo = data;
+        },
+        err => {
+          console.log('Observable Error-> ' ,err)
         })
   }
 
@@ -56,6 +62,9 @@ export class HomePage {
     this.todoService.delete(todo)
         .subscribe(response => {
           this.todos.splice(index, 1);
+        },
+        err => {
+          console.log('Observable Error-> ' ,err)
         });
   }
 
