@@ -73,7 +73,7 @@ export class Server{
           this.handleError(res, err.message, "Failed to add todo");
         } else {
           //res.status(201).json(doc.ops[0]);
-          this.reader(res.status(201) ,doc)
+          this.reader(res.status(201) ,doc.ops[0])
         }
       });
     });
