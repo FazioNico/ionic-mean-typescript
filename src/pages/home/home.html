@@ -19,8 +19,8 @@
     <h2>Add a Todo</h2>
   </div>
   <ion-item no-lines>
-    <ion-input #newTodo (keyup.enter)="addTodo(newTodo.value)" type="text" placeholder="Add new todo..." ></ion-input>
-    <button clear large item-right (click)="return;">
+    <ion-input #newTodo (keyup.enter)="addTodo(newTodo)" type="text" placeholder="Add new todo..." ></ion-input>
+    <button clear large item-right (click)="clearInput(newTodo)">
       <ion-icon name="add"> </ion-icon>
     </button>
   </ion-item>
@@ -28,7 +28,7 @@
     <h2>Todo List <small>Swipe a todo to edit or delete</small></h2>
   </div>
   <ion-list no-lines>
-    <ion-item-sliding #slidingItem *ngFor="let todo of todos">
+    <ion-item-sliding #slidingItem *ngFor="let todo of todos; let i = index;">
       <ion-item>
         <ion-checkbox (click)="toggleComplete(todo)" [checked]="todo.isComplete"></ion-checkbox>
         <ion-item text-wrap item-left [class.completed]="todo.isComplete">
@@ -36,8 +36,8 @@
         </ion-item>
       </ion-item>
       <ion-item-options>
-        <button (click)="navToEdit(todo, index); slidingItem.close()">Edit</button>
-        <button danger (click)="deleteTodo(todo, index)">
+        <button (click)="navToEdit(todo); slidingItem.close()">Edit</button>
+        <button danger (click)="deleteTodo(todo)">
           <ion-icon name="trash"></ion-icon>
         </button>
       </ion-item-options>

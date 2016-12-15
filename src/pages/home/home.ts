@@ -18,7 +18,7 @@ import {TodoService} from '../../providers/todo-service';
 })
 export class HomePage {
 
-  public todos: any;
+  public todos:any[];
 
   constructor(
     public navCtrl: NavController,
@@ -27,7 +27,7 @@ export class HomePage {
     this.loadTodos();
   }
 
-  loadTodos() {
+  loadTodos():void{
     this.todoService.load()
         .subscribe(data => {
           console.log('load data->', data)
@@ -38,19 +38,19 @@ export class HomePage {
         })
   }
 
-  addTodo(todo:string) {
+  addTodo(todoInput:HTMLInputElement):void {
     //console.log(todo)
-    this.todoService.add(todo)
+    this.todoService.add(todoInput.value)
         .subscribe(data  => {
           this.todos.push(data)
         },
         err => {
           console.log('Observable Error-> ' ,err)
         });
-      todo = '';
+    this.clearInput(todoInput);
   }
 
-  toggleComplete(todo: any) {
+  toggleComplete(todo:any):void {
     todo.isComplete = !todo.isComplete;
     this.todoService.update(todo)
         .subscribe(data => {
@@ -61,21 +61,32 @@ export class HomePage {
         })
   }
 
-  deleteTodo(todo: any, index:number) {
+  deleteTodo(todo:HTMLObjectElement):void {
+    //console.log('todo-> ', todo)
+    let index:number = this.todos.indexOf(todo);
     this.todoService.delete(todo)
         .subscribe(response => {
-          this.todos.splice(index, 1);
+          if(index > -1){
+              this.todos.splice(index, 1);
+          }
         },
         err => {
           console.log('Observable Error-> ' ,err)
         });
   }
 
-  navToEdit(todo: any, index: number) {
-    this.navCtrl.push(TodoEditPage, {
-      todo: todo,
-      todos: this.todos,
-      index: index
-    });
+  clearInput(todoInput:HTMLInputElement):void{
+    todoInput.value = '';
+  }
+
+  navToEdit(todo:HTMLObjectElement):void {
+    let index:number = this.todos.indexOf(todo);
+    if(index > -1){
+      this.navCtrl.push(TodoEditPage, {
+        todo: todo,
+        todos: this.todos,
+        index: index
+      });
+    }
   }
 }

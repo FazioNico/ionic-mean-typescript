@@ -18,7 +18,8 @@ import 'rxjs/Rx';
 export class TodoService {
   todosUrl = "http://localhost:8080/api/todos"
 
-  constructor(public http: Http) {}
+  constructor(public http: Http) {
+  }
 
   // Get all todos
   load(): Observable<any> {
