@@ -1,7 +1,7 @@
 {
-  "name": "ionic-hello-world",
-  "author": "Ionic Framework",
-  "homepage": "http://ionicframework.com/",
+  "name": "ionic-mean-typescript",
+  "author": "Nicolas Fazio",
+  "homepage": "http://nicolasfazio.ch/",
   "private": true,
   "scripts": {
     "server": "ntsc server.ts",
@@ -57,5 +57,5 @@
       "locator": "ios"
     }
   ],
-  "description": "ionic-mean-typescript: An Ionic project"
+  "description": "MEIN Stack - The MEAN Stack with Ionic &amp; Typescript"
 }
