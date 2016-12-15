@@ -33,9 +33,9 @@ export class HomePage {
           console.log('load data->', data)
           this.todos = data;
         },
-      err => {
-        console.log('Observable Error-> ' ,err)
-      })
+        err => {
+          console.log('Observable Error-> ' ,err)
+        })
   }
 
   addTodo(todo:string) {
@@ -43,6 +43,9 @@ export class HomePage {
     this.todoService.add(todo)
         .subscribe(data  => {
           this.todos.push(data)
+        },
+        err => {
+          console.log('Observable Error-> ' ,err)
         });
       todo = '';
   }
