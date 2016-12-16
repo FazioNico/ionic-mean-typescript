@@ -146,6 +146,11 @@ export class Server{
          }
        });
      });
+     // 404 ERROR PAGES
+     this.app.get('*', (req, res)=>{
+       this.catchDbError(res);
+       this.reader(res.status(404) ,'ERROR: 404 PAGES NOT FOUND')
+     });
   }
 
   reader(resStatus:any,data:any):void{
