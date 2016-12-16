@@ -6,7 +6,9 @@
   "main": "server.js",
   "scripts": {
     "server": "ntsc server.ts",
-    "postserver": "node server.js",
+    "postserver": "npm run server-dev",
+    "server-dev": "nodemon server.js",
+    "server-prod": "node server.js",
     "ionic:build": "ionic-app-scripts build",
     "ionic:serve": "ionic-app-scripts serve"
   },
@@ -40,6 +42,7 @@
     "@types/cors": "0.0.33",
     "@types/express": "^4.0.34",
     "@types/mongodb": "^2.1.36",
+    "nodemon": "^1.11.0",
     "typescript": "2.0.6"
   },
   "cordovaPlugins": [
