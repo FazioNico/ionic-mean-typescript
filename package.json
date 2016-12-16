@@ -9,8 +9,13 @@
     "postserver": "npm run server-dev",
     "server-dev": "nodemon server.js",
     "server-prod": "node server.js",
-    "ionic:build": "ionic-app-scripts build",
-    "ionic:serve": "ionic-app-scripts serve"
+    "build": "ionic-app-scripts build",
+    "watch": "ionic-app-scripts watch",
+    "serve:before": "watch",
+    "emulate:before": "build",
+    "deploy:before": "build",
+    "build:before": "build",
+    "run:before": "build"
   },
   "engines": {
     "node": "~7.0.0"
