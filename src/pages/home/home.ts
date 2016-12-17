@@ -38,7 +38,7 @@ export class HomePage {
         })
   }
 
-  addTodo(todoInput:HTMLInputElement):void {
+  addTodo(todoInput:any):void {
     //console.log(todo)
     this.todoService.add(todoInput.value)
         .subscribe(data  => {
@@ -61,7 +61,7 @@ export class HomePage {
         })
   }
 
-  deleteTodo(todo:HTMLObjectElement):void {
+  deleteTodo(todo:any):void {
     //console.log('todo-> ', todo)
     let index:number = this.todos.indexOf(todo);
     this.todoService.delete(todo)
@@ -75,11 +75,11 @@ export class HomePage {
         });
   }
 
-  clearInput(todoInput:HTMLInputElement):void{
+  clearInput(todoInput:any):void{
     todoInput.value = '';
   }
 
-  navToEdit(todo:HTMLObjectElement):void {
+  navToEdit(todo:any):void {
     let index:number = this.todos.indexOf(todo);
     if(index > -1){
       this.navCtrl.push(TodoEditPage, {
