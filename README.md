@@ -9,7 +9,6 @@ MEIN Stack is a TypeScript Full Stack MongoDB + ExpressJS + Angular2 + NodeJS wi
 - NodeJS 7 - Download & Install Node.js and the npm package manager with NVM `$ nvm install node 7`.
 - MongoDB - [Download](https://www.mongodb.com) & Install MongoDB, and make sure it's running on the default port (27017).
 - [Typescript](https://www.npmjs.com/package/typescript) Latest stable version install in Global `$ npm install -g typescript`
-- [nTypescript](https://www.npmjs.com/package/ntypescript) Compiler Latest stable version install in Global `$ npm install ntypescript -g`
 - [Nodemon](https://nodemon.io/) Latest stable version install in Global `$ npm install -g nodemon`
 - [Ionic 2](https://ionicframework.com/) & [Cordova](https://cordova.apache.org/) - Latest stable version install in Global `$ npm install -g ionic cordova`
 - And you should also have git installed to a better working flow.
