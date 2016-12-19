@@ -12,9 +12,8 @@ export class Routes{
           {url:'/api/todos/:id', db: 'todos'}
         ],
         get: [
-          {url:'/api/todos', db: 'todos'}/*,
-          TODO: {url:'/api/todos/:id', db: 'todos'}
-          */
+          {url:'/api/todos', db: 'todos'},
+          {url:'/api/todos/:id', db: 'todos'}
         ]
       }];
 
@@ -31,14 +30,31 @@ export class Routes{
               app.get(get.url, (req, res)=> {
                 console.log('Query: $_GET ', get.url)
                 console.log('Request params-> ', req.params)
+
                 // connect to $db
-                db.collection(get.db).find({}).toArray((err, docs)=> {
-                  if (err) {
-                    console.log(res, err.message, "Failed to get items");
-                  } else {
-                    res.status(201).json(docs);
-                  }
-                });
+                if(req.params._id){
+                   // Query with $params :id => return item by :id
+                   db.collection(get.db).findOne({ _id: new objID(req.params.id) }, (err, doc)=> {
+                     if (err) {
+                       //this.handleError(res, err.message, "Failed to get todo by _id");
+                       console.log(res, err.message, "Failed to get item by :id");
+                     } else {
+                       res.status(200).json(doc);
+                     }
+                   });
+                }
+                else {
+                  // Simple Query without $params => return $array[items, items]
+                  db.collection(get.db).find({}).toArray((err, docs)=> {
+                    if (err) {
+                      console.log(res, err.message, "Failed to get items");
+                    } else {
+                      res.status(201).json(docs);
+                    }
+                  });
+                }
+
+
               });
           })
         }
