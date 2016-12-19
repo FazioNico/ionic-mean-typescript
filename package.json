@@ -10,6 +10,7 @@
     "server-watch": "nodemon --watch server.js & npm run front",
     "front": "ionic serve",
     "prod": "ntsc server.ts && ionic serve",
+    "deploy": "gh-pages -d www",
     "build": "ionic-app-scripts build",
     "watch": "ionic-app-scripts watch",
     "serve:before": "watch",
