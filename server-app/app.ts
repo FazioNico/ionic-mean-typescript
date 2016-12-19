@@ -6,7 +6,8 @@
 * @Last modified time: 17-12-2016
 */
 
-/// <reference path="./index.d.ts" />
+
+/// <reference path="./server-types/index.d.ts" />
 
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
