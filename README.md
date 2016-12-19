@@ -32,7 +32,7 @@ MEIN Stack is a TypeScript Full Stack MongoDB + ExpressJS + Angular2 + NodeJS wi
 ## Start Production mode
 - config mongodb URL
 - open this project in your IDE and install all node_modules from IDE CLI `$ nvm use 7`, `$ npm install` and run server with `$ npm run prod`
-- if you've trouble, try the manual start with `$ npm run server-prod` to replace `$ nodemon  --watch server.js` and remode `-w` from `$ ntsc server.ts -w`.
+- if you've trouble, try the manual start without `$ nodemon  --watch server.js` and remove `-w` from `$ ntsc server.ts -w`.
 
 ## Server API End Points
 - index endpoints: `http://localhost:8080/api/todos` & Request Method `$_GET` and `$_POST`
