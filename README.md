@@ -38,5 +38,14 @@ MEIN Stack is a TypeScript Full Stack MongoDB + ExpressJS + Angular2 + NodeJS wi
 - index endpoints: `http://localhost:8080/api/todos` & Request Method `$_GET` and `$_POST`
 - item endpoints: `http://localhost:8080/api/todos/:id` & Request Method `$_GET` and `$_POST`with $params `{ _id: NUMBER_ID }`
 
+## Deploy Application
+Deploy runing task
+
+### Github
+- config mongodb URL- open this project in your IDE and install all node_modules from IDE CLI `$ nvm use 7`, `$ npm install` and run server with `$ npm run delpoy` this will push `./www` folder on your Github gh-pages branch repository
+
+### Heroku
+*coming soon...*
+
 ## About author
 Hi, i'm a Front-end developper living in Geneva Switzerland and i build hybrid mobile & web applications for almost 15 years. You can follow me on Twitter @FazioNico or checkout my own website http://nicolasfazio.ch
