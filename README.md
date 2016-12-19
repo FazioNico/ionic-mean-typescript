@@ -42,7 +42,8 @@ MEIN Stack is a TypeScript Full Stack MongoDB + ExpressJS + Angular2 + NodeJS wi
 Deploy runing task
 
 ### Github
-- config mongodb URL- open this project in your IDE and install all node_modules from IDE CLI `$ nvm use 7`, `$ npm install` and run server with `$ npm run delpoy` this will push `./www` folder on your Github gh-pages branch repository
+- config mongodb URL
+- open this project in your IDE and install all node_modules from IDE CLI `$ nvm use 7`, `$ npm install` and run server with `$ npm run delpoy` this will push `./www` folder on your Github gh-pages branch repository
 
 ### Heroku
 *coming soon...*
