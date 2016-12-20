@@ -51,8 +51,13 @@ Deploy runing task
 - config mongodb URL
 - open this project in your IDE and install all node_modules from IDE CLI `$ nvm use 7`, `$ npm install` and run server with `$ npm run delpoy` this will push `./www` folder on your Github gh-pages branch repository
 
-### Heroku
+### Heroku (Back-end)
 *coming soon...*
+
+### IOS (Front-end)
+- config mongodb URL
+- open this project in your IDE and install all node_modules from IDE CLI `$ nvm use 7`, `$ npm install` and run server with `$ npm ionic build ios` to build xCode Files
+- publish on Itunes Connect
 
 ## About author
 Hi, i'm a Front-end developper living in Geneva Switzerland and i build hybrid mobile & web applications for almost 15 years. You can follow me on Twitter @FazioNico or checkout my own website http://nicolasfazio.ch
