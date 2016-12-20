@@ -1,3 +1,9 @@
+<img src="https://live.zoomdata.com/zoomdata/service/connection/types/icon/MONGO_MONGO?v=$%7Btimestamp%7D" width="80">
+<img src="http://apps.octoconsulting.com/images/expressIcon.png" width="80">
+<img src="https://material.angularjs.org/latest/img/icons/angular-logo.svg" width="80">
+<img src="http://code.runnable.com/images/provider-icons/icon-node.js.svg" width="80"> +
+<img src="http://cloudoki.com/images/frameworks/ionic.png" width="80">
+
 # Ionic MEAN Stack Typescript
 MEIN Stack - The MEAN Stack with Ionic &amp; Typescript
 
