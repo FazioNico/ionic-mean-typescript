@@ -9,7 +9,6 @@
 import * as mongodb from 'mongodb';
 
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/test';
-// const MONGODB_URI = 'mongodb://localhost:27017/test';
 
 export class DbService{
 
