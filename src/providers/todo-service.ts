@@ -16,7 +16,7 @@ import 'rxjs/Rx';
 
 @Injectable()
 export class TodoService {
-  todosUrl = "http://localhost:8080/api/todos"
+  todosUrl = "http://localhost:8080/todos"
 
   constructor(public http: Http) {
   }

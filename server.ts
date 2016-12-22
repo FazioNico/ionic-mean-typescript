@@ -5,6 +5,8 @@
 * @Last modified by:   webmaster-fazio
 * @Last modified time: 14-12-2016
 */
-import { Server } from "./server-app/app";
-let server = new Server()
-server.bootstrap()
+
+import { Server } from "./server/app";
+
+const NodeServer = new Server()
+NodeServer.bootstrap()

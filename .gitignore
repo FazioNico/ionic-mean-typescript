@@ -35,4 +35,5 @@ UserInterfaceState.xcuserstate
 
 server-app/*.js
 server-app/**/*.js
+server/**/*.js
 server.js
