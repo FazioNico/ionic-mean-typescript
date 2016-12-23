@@ -2,12 +2,19 @@ import { mongoDbConnect } from "./mongodb/mongo";
 
 export class DataBase{
 
-  static db:any
-
   constructor(){
   }
 
   static connect(){
-    this.db = mongoDbConnect();
+    // connect to database
+    return new Promise((resolve,reject)=>{
+      mongoDbConnect()
+        .then((response)=>{
+          resolve(response)
+        })
+        .catch( err =>{
+          reject(err)
+        })
+    })
   }
 }
