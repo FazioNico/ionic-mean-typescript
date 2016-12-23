@@ -7,7 +7,8 @@
 */
 
 import * as mongoose from 'mongoose';
-
+// Import MongoDB config
+import { dbHost, dbName } from "../../config";
 // Import Mongoose Model & Schemas
 import { ITodoModel } from './models/todo.model';
 import { todoSchema } from './schemas/todo.schema';
@@ -19,11 +20,16 @@ import { todoSchema } from './schemas/todo.schema';
   Mongoose Interface & Generic Types declaraton.
 */
 
+// Define MongoDB path url 
+const MONGODB_URI:string = process.env.MONGODB_URI || `${dbHost}/${dbName}`;
+
 // Define & export Mongoose Model
 export const Todo = mongoose.model<ITodoModel>('todos', todoSchema);
 
 // Connect to MongoDB with Mongoose
-mongoose.connect('mongodb://localhost:27017/test', (err) => {
-	if (err) {return console.error("Error connecting to MongoDB!");}
-  else{ return console.error("MongoDB Ready!"); }
-});
+export const mongoDbConnect = ()=>{
+	mongoose.connect(MONGODB_URI, (err) => {
+		if (err) {return console.error("Error connecting to MongoDB!");}
+	  else{ return console.error("MongoDB Ready!"); }
+	});
+}

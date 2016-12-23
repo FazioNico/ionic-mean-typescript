@@ -14,6 +14,7 @@ import * as bodyParser from 'body-parser';
 import * as cors from 'cors';
 
 import { api }  from "./modules/api";
+import { DataBase }  from "./modules/database";
 
 export class Server{
 
@@ -26,6 +27,7 @@ export class Server{
     this.app = express();
     this.server = http.createServer(this.app);
     this.config()
+    this.dbConnect()
     this.route()
   }
 
@@ -42,6 +44,10 @@ export class Server{
         err.status = 404;
         next(err);
       });
+  }
+
+  private dbConnect(){
+    DataBase.connect()
   }
 
   private route():void{
