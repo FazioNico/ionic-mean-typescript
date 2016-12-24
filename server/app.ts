@@ -40,7 +40,6 @@ export class Server{
     this.config()
     this.middleware()
     this.dbConnect()
-    this.route()
   }
 
   private config():void{
@@ -57,34 +56,44 @@ export class Server{
       .use(bodyParser.json({type: 'application/vnd.api+json'}))
       // use bodyParser middleware to decode urlencoded parameters
       .use(bodyParser.urlencoded({extended: false}))
-      .use(cors());
+      .use(cors())
   }
 
   private dbConnect(){
       DataBase.connect()
         .then(result =>{
           console.log(result)
+          this.route()
         })
         .catch(err => {
           console.log(err)
-          // this.app.use((req,res,next) => {
-          //     res.status(404).json([{error: 'ERROR: 404 PAGES NOT FOUND!!'}]);
-          //     process.exit(1);
-          // })
+          this.app
+            .get('/', log, (req, res)=>{
+              res.status(200);
+              res.json([{api: 'Hello!'}]);
+             })
+             // DEFAULT 404 ERROR PAGES
+            .get('*', log, (req, res)=>{
+              res.status(404).json([{error: err}]);
+            })
         })
   }
 
   private route():void{
     this.app
+      .get('/', log, (req, res)=>{
+        res.status(200);
+        res.json([{result: `REST API ready!`}]);
+       })
       .get('/todos', log, api.getItems)
     	.get('/todos/:id', log, api.getItem)
       .post('/todos', log, api.addItem )
     	.put('/todos/:id', log, api.updateItem )
     	.delete('/todos/:id', log, api.deleteItem )
-    // DEFAULT 404 ERROR PAGES
-    this.app.get('*', log, (req, res)=>{
-       res.status(404).json([{error: 'ERROR: 404 PAGES NOT FOUND!!'}]);
-     });
+      // DEFAULT 404 ERROR PAGES
+      .get('*', log, (req, res)=>{
+        res.status(404).json([{error: 'Page not found'}]);
+      })
   }
 
   private onError(error: NodeJS.ErrnoException): void {
