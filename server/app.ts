@@ -14,16 +14,10 @@ import * as bodyParser from 'body-parser';
 import * as cors from 'cors';
 import * as path from 'path';
 
-import { api }  from "./modules/api";
+import { ServerRoutes }  from "./modules/routes/serverRoute";
+import { APIRoutes }  from "./modules/routes/apiRoute";
 import { DataBase }  from "./modules/database";
-
-const log = (req,res,next) => {
-    console.log("Query route path-> ", req.route.path);
-    console.log("Query route params-> ", req.params);
-    console.log("Query route methode-> ", req.route.methods);
-  	console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-  	next();
-}
+import { log }  from "./modules/log";
 
 export class Server{
 
@@ -57,6 +51,7 @@ export class Server{
       // use bodyParser middleware to decode urlencoded parameters
       .use(bodyParser.urlencoded({extended: false}))
       .use(cors())
+      //.use(new BaseRoutes().routes);
   }
 
   private dbConnect(){
@@ -65,13 +60,15 @@ export class Server{
         .then(result =>{
           // Load all route
           console.log(result)
-          this.route_server()
-          this.route_api()
+          //this.route_server()
+          this.app.use( new ServerRoutes().routes());
+          this.app.use( new APIRoutes().routes());
         })
         .catch(err => {
           // DB connection Error => load only server route
           console.log(err)
-          this.route_server()
+          //this.route_server()
+          //this.app.use(BaseRoutes.routes);
           return err
         })
         .then(err => {
@@ -91,15 +88,15 @@ export class Server{
      })
   }
 
-  private route_api():void{
-    // REST API Endpoints
-    this.app
-      .get('/todos', log, api.getItems)
-    	.get('/todos/:id', log, api.getItem)
-      .post('/todos', log, api.addItem )
-    	.put('/todos/:id', log, api.updateItem )
-    	.delete('/todos/:id', log, api.deleteItem )
-  }
+  // private route_api():void{
+  //   // REST API Endpoints
+  //   this.app
+  //     .get('/todos', log, api.getItems)
+  //   	.get('/todos/:id', log, api.getItem)
+  //     .post('/todos', log, api.addItem )
+  //   	.put('/todos/:id', log, api.updateItem )
+  //   	.delete('/todos/:id', log, api.deleteItem )
+  // }
 
   private onError(error: NodeJS.ErrnoException): void {
     if (error.syscall !== 'listen') throw error;

@@ -7,35 +7,34 @@
 */
 
 import * as mongoose from 'mongoose';
-import { Todo } from './mongodb/mongo';
-import { ITodoModel } from './mongodb/models/todo.model';
+import { Todo, ITodoModel } from './todo.model';
 
 const toObjectId = (_id: string): mongoose.Types.ObjectId =>{
     return mongoose.Types.ObjectId.createFromHexString(_id);
 }
 
-export const api = {
+export const todoController = {
 	getItems : (req,res) => {
-		Todo.find((err, docs) => {
+		Todo.find((err, docs:ITodoModel[]) => {
 			if(err) return console.log(err);
 			res.json(docs);
 		})
 	},
 	getItem : (req,res) => {
-		Todo.findById(toObjectId(req.params.id), (err, doc) => {
+		Todo.findById(toObjectId(req.params.id), (err, doc:ITodoModel) => {
 			if(err) return console.log(err);
 			res.json(doc);
 		})
 	},
 	deleteItem : (req,res) => {
-		Todo.findByIdAndRemove(toObjectId(req.params.id),  (err, doc) => {
+		Todo.findByIdAndRemove(toObjectId(req.params.id),  (err, doc:ITodoModel) => {
 			if(err) return console.log(err);
 			res.json(doc);
 		})
 	},
 	addItem : (req,res) =>{
 
-		(new Todo(<ITodoModel>req.body)).save((err, doc) => {
+		(new Todo(<ITodoModel>req.body)).save((err, doc:ITodoModel) => {
 			if(err) return console.log(err);
 			res.json(doc);
 		})
@@ -43,7 +42,7 @@ export const api = {
 	updateItem : (req,res) => {
 		let updateTodo = <ITodoModel>req.body;
 		delete updateTodo._id;
-		Todo.update({_id: toObjectId(req.params.id)}, updateTodo, (err, doc:any)=>{
+		Todo.update({_id: toObjectId(req.params.id)}, updateTodo, (err, doc:ITodoModel)=>{
 			if(err) return console.log(err);
 			res.json(doc);
 		})

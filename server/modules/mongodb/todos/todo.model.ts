@@ -7,8 +7,13 @@
 */
 
 import * as mongoose from 'mongoose';
+// Import Schemas
+import { todoSchema } from './todo.schema';
 
 export interface ITodoModel extends mongoose.Document {
   description: string;
   isComplete: boolean;
 }
+
+// Define & export Mongoose Model with Interface
+export const Todo = mongoose.model<ITodoModel>('todos', todoSchema);

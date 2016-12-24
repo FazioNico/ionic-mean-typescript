@@ -9,9 +9,6 @@
 import * as mongoose from 'mongoose';
 // Import MongoDB config
 import { dbHost, dbName } from "../../config";
-// Import Mongoose Model & Schemas
-import { ITodoModel } from './models/todo.model';
-import { todoSchema } from './schemas/todo.schema';
 
 /*
   Use TypeScript with mongoose models
@@ -22,9 +19,6 @@ import { todoSchema } from './schemas/todo.schema';
 
 // Define MongoDB path url
 const MONGODB_URI:string = process.env.MONGODB_URI || `${dbHost}/${dbName}`;
-
-// Define & export Mongoose Model
-export const Todo = mongoose.model<ITodoModel>('todos', todoSchema);
 
 export const mongoDbConnect = ()=>{
 
