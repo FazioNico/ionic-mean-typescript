@@ -44,14 +44,14 @@ export class Server{
 
   private config():void{
     this.db = false;
-    this.root = path.join(__dirname, 'www')
+    this.root = path.join(__dirname, '../www')
     this.port = this.normalizePort(process.env.PORT || 8080);
     this.app.use(express.static(this.root))
   }
 
   private middleware(){
     this.app
-    // use bodyParser middleware to decode json parameters
+      // use bodyParser middleware to decode json parameters
       .use(bodyParser.json())
       .use(bodyParser.json({type: 'application/vnd.api+json'}))
       // use bodyParser middleware to decode urlencoded parameters
@@ -60,40 +60,45 @@ export class Server{
   }
 
   private dbConnect(){
+      // Load DB connection
       DataBase.connect()
         .then(result =>{
+          // Load all route
           console.log(result)
-          this.route()
+          this.route_server()
+          this.route_api()
         })
         .catch(err => {
+          // DB connection Error => load only server route
           console.log(err)
-          this.app
-            .get('/', log, (req, res)=>{
-              res.status(200);
-              res.json([{api: 'Hello!'}]);
-             })
-             // DEFAULT 404 ERROR PAGES
-            .get('*', log, (req, res)=>{
-              res.status(404).json([{error: err}]);
-            })
+          this.route_server()
+          return err
+        })
+        .then(err => {
+          // Then catch 404 & db error connection
+          this.app.use((req, res)=>{
+            let message = (err)? [{error: 'Page not found'}, {err}] : [{error: 'Page not found'}]
+            res.status(404).json(message);
+          })
         })
   }
 
-  private route():void{
+  private route_server():void{
+    // Index Server
+    this.app.get('/', log, (req, res)=>{
+      res.status(200);
+      res.json([{api: 'Hello!'}]);
+     })
+  }
+
+  private route_api():void{
+    // REST API Endpoints
     this.app
-      .get('/', log, (req, res)=>{
-        res.status(200);
-        res.json([{result: `REST API ready!`}]);
-       })
       .get('/todos', log, api.getItems)
     	.get('/todos/:id', log, api.getItem)
       .post('/todos', log, api.addItem )
     	.put('/todos/:id', log, api.updateItem )
     	.delete('/todos/:id', log, api.deleteItem )
-      // DEFAULT 404 ERROR PAGES
-      .get('*', log, (req, res)=>{
-        res.status(404).json([{error: 'Page not found'}]);
-      })
   }
 
   private onError(error: NodeJS.ErrnoException): void {
