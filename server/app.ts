@@ -45,7 +45,7 @@ export class Server{
   private config():void{
     this.db = false;
     this.root = path.join(__dirname, '../www')
-    this.port = this.normalizePort(process.env.MONGODB_URI || process.env.PORT|| 8080);
+    this.port = this.normalizePort(process.env.PORT|| 8080);
     this.app.use(express.static(this.root))
   }
 
