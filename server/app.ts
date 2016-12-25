@@ -3,7 +3,7 @@
 * @Date:   21-12-2016
 * @Email:  contact@nicolasfazio.ch
 * @Last modified by:   webmaster-fazio
-* @Last modified time: 22-12-2016
+* @Last modified time: 24-12-2016
 */
 
 /// <reference path="./@types/index.d.ts" />
