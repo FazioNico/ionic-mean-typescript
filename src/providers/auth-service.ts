@@ -23,11 +23,31 @@ import 'rxjs/Rx';
 export class AuthService {
 
   private AuthUrl = "http://localhost:8080/auth"
+  private isAuthUrl = "http://localhost:8080/isauth"
 
   constructor(public http: Http) {
 
     console.log('Hello Auth Provider');
 
+  }
+
+  isAuth():Observable<boolean|any>{
+    let storage = JSON.parse(localStorage.getItem('authTokenTest'))
+    if(!storage){
+      return Observable.create( (observer)=> {
+          observer.next(false);
+          observer.complete();
+          // Note that this is optional, you do not have to return this if you require no cleanup
+          //return () => { console.log('unsubscribe'); };
+      });
+    }
+    //console.log('token-> ', storage.token)
+    let headers = new Headers({'cache-control': 'no-cache','x-access-token': storage.token});
+    let options = new RequestOptions({ headers: headers });
+
+    return this.http.get(this.isAuthUrl, options)
+               .map(res => res.json())
+               .catch(this.handleError);
   }
 
   loginUser(user): Observable<any> {
@@ -45,7 +65,7 @@ export class AuthService {
       let body = res.json();
       //return body.data || { };
       return body || {};
-    }
+  }
 
   handleError (error: Response | any) {
     let errMsg: string;

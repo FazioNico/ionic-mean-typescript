@@ -25,6 +25,7 @@ export class UsersRoutes {
         var controller = this._UsersController;
         // Public Endpoints:
         router.post('/auth', log, controller.auth)
+        router.get('/isauth', log, controller.isAuth)
 
         // Use middleware to set private Endpoints:
         router.use(Authentication.authenticatedRoute);

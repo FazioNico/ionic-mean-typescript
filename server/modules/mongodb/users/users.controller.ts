@@ -34,6 +34,28 @@ export const userController = {
   //     res.json({ success: true });
 	// 	})
 	// },
+
+  isAuth: (req,res)=> {
+    Authentication.checkAuthentication(req,  (isAuth: boolean|any): void =>{
+      //console.log('looog-> ', doc)
+      if (isAuth) {
+        //console.log('isAuth-> ', isAuth.user._id, 'req.params.id-> ',  req.params.id)
+        // the user has a proper token
+        // Send request to database
+    		User.findById(toObjectId(isAuth.user._id), (err, doc:IUserModel) => {
+    			if(err) return console.log(err);
+          if(doc === null){
+            res.json({ success: false, message: 'isAuth failed. User not exist', user: isAuth.user});
+            return console.log('isAuth failed. User not exist')
+          }
+          res.json(doc);
+        })
+      }
+      else {
+        res.json({ success: false, message: 'No user token finded'});
+      }
+    });
+	},
   auth: (req,res)=> {
     // find the user
     User.findOne({name: req.body.name}, (err, user:IUserModel)=> {
