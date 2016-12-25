@@ -9,6 +9,8 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
+
+import { LoginPage } from '../pages/login/login';
 import { HomePage } from '../pages/home/home';
 import { TodoEditPage } from '../pages/todo-edit/todo-edit';
 import {TodoService} from '../providers/todo-service';
@@ -16,6 +18,7 @@ import {TodoService} from '../providers/todo-service';
 @NgModule({
   declarations: [
     MyApp,
+    LoginPage,
     HomePage,
     TodoEditPage
   ],
@@ -25,6 +28,7 @@ import {TodoService} from '../providers/todo-service';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
+    LoginPage,
     HomePage,
     TodoEditPage
   ],
@@ -33,6 +37,7 @@ import {TodoService} from '../providers/todo-service';
       provide: ErrorHandler,
       useClass: IonicErrorHandler
     },
-  TodoService]
+    TodoService
+  ]
 })
 export class AppModule {}
