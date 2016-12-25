@@ -8,6 +8,7 @@
 
 import * as express from 'express';
 import { TodosRoutes }  from "../api/todos/todosRoutes";
+import { UsersRoutes }  from "../api/users/users.routes";
 import { log } from '../log';
 
 const app = express();
@@ -15,8 +16,8 @@ const app = express();
 export class APIRoutes {
 
     routes() {
-        app.use("/", new TodosRoutes().routes());
-        //app.use("/", new otherRoutes().routes);
+        app.use("/", new TodosRoutes().routes())
+        app.use("/", new UsersRoutes().routes());
         return app;
     }
 

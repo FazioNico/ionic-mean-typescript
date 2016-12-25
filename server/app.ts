@@ -13,11 +13,14 @@ import * as http  from "http";
 import * as bodyParser from 'body-parser';
 import * as cors from 'cors';
 import * as path from 'path';
+import * as morgan from 'morgan';
 
 import { ServerRoutes }  from "./modules/routes/serverRoute";
 import { APIRoutes }  from "./modules/routes/apiRoute";
 import { DataBase }  from "./modules/database";
 import { log }  from "./modules/log";
+// Import secretTokenKey config
+import { secretTokenKey } from "./config";
 
 export class Server{
 
@@ -50,6 +53,10 @@ export class Server{
       .use(bodyParser.json({type: 'application/vnd.api+json'}))
       // use bodyParser middleware to decode urlencoded parameters
       .use(bodyParser.urlencoded({extended: false}))
+      // secret variable for jwt
+      .set('superSecret', secretTokenKey)
+      // use morgan to log requests to the console
+      .use(morgan('dev'))
       .use(cors())
   }
 
