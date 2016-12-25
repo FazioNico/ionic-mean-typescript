@@ -11,12 +11,15 @@ import { todoController }  from "../../mongodb/todos/todos.controller";
 import { log } from '../../log';
 
 var router = express.Router();
+
 export class TodosRoutes {
+
     private _TodosController: any;
 
     constructor () {
         this._TodosController = todoController;
     }
+    
     routes() {
         var controller = this._TodosController;
         router.get('/todos', log, controller.getItems)

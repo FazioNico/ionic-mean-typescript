@@ -51,7 +51,6 @@ export class Server{
       // use bodyParser middleware to decode urlencoded parameters
       .use(bodyParser.urlencoded({extended: false}))
       .use(cors())
-      //.use(new BaseRoutes().routes);
   }
 
   private dbConnect(){
@@ -60,15 +59,16 @@ export class Server{
         .then(result =>{
           // Load all route
           console.log(result)
-          //this.route_server()
+          // Server Endpoints
           this.app.use( new ServerRoutes().routes());
+          // REST API Endpoints
           this.app.use( new APIRoutes().routes());
         })
         .catch(err => {
           // DB connection Error => load only server route
           console.log(err)
-          //this.route_server()
-          //this.app.use(BaseRoutes.routes);
+          // Server Endpoints
+          this.app.use(new ServerRoutes().routes());
           return err
         })
         .then(err => {
@@ -79,24 +79,6 @@ export class Server{
           })
         })
   }
-
-  private route_server():void{
-    // Index Server
-    this.app.get('/', log, (req, res)=>{
-      res.status(200);
-      res.json([{api: 'Hello!'}]);
-     })
-  }
-
-  // private route_api():void{
-  //   // REST API Endpoints
-  //   this.app
-  //     .get('/todos', log, api.getItems)
-  //   	.get('/todos/:id', log, api.getItem)
-  //     .post('/todos', log, api.addItem )
-  //   	.put('/todos/:id', log, api.updateItem )
-  //   	.delete('/todos/:id', log, api.deleteItem )
-  // }
 
   private onError(error: NodeJS.ErrnoException): void {
     if (error.syscall !== 'listen') throw error;
