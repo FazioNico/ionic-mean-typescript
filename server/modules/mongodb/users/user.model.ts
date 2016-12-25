@@ -1,9 +1,9 @@
 /**
 * @Author: Nicolas Fazio <webmaster-fazio>
-* @Date:   22-12-2016
+* @Date:   25-12-2016
 * @Email:  contact@nicolasfazio.ch
 * @Last modified by:   webmaster-fazio
-* @Last modified time: 24-12-2016
+* @Last modified time: 25-12-2016
 */
 
 import * as mongoose from 'mongoose';
@@ -11,8 +11,9 @@ import * as mongoose from 'mongoose';
 import { UserSchema } from './user.schema';
 
 export interface IUserModel extends mongoose.Document {
-  description: string;
-  isComplete: boolean;
+  name: string,
+  password: string,
+  admin: boolean
 }
 
 // Define & export Mongoose Model with Interface

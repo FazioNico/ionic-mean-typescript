@@ -9,8 +9,9 @@
 import * as express from 'express';
 import { userController }  from "../../mongodb/users/users.controller";
 import { log } from '../../log';
+import {Authentication} from '../../authentication';
 
-var router = express.Router();
+const router = express.Router();
 
 export class UsersRoutes {
 
@@ -22,8 +23,17 @@ export class UsersRoutes {
 
     routes() {
         var controller = this._UsersController;
-        //router.get('/setup', log, controller.setup)
+        // Public Endpoints:
+        router.post('/auth', log, controller.auth)
+
+        // Use middleware to set private Endpoints:
+        router.use(Authentication.authenticatedRoute);
+
+        // Privates Endpoints
         router.get('/users', log, controller.getAll)
+        router.get('/users/:id', log, controller.getUser)
+
+        // then return the user router
         return router;
     }
 
