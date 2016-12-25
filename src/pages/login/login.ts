@@ -3,6 +3,7 @@ import { NavController, LoadingController, AlertController } from 'ionic-angular
 import {Validators, FormBuilder } from '@angular/forms';
 import { Storage } from '@ionic/storage';
 
+import { AuthService } from '../../providers/auth-service';
 /*
   Generated class for the Login page.
 
@@ -17,21 +18,31 @@ export class LoginPage {
 
   userForm:any;
   loader:any;
+  errorMessage:any;
 
   constructor(
     public navCtrl: NavController,
     private _formBuilder: FormBuilder,
     public alertCtrl: AlertController,
-    public loadCtrl:LoadingController
+    public loadCtrl:LoadingController,
+    private _Auth: AuthService
   ) {
     this.userForm = this._formBuilder.group({
-      email: ['', Validators.required],
+      name: ['', Validators.required],
       password: ['', Validators.required],
     });
   }
 
   /* Core Methode */
-
+  saveToken(token){
+    let data = {
+      'token': token
+    };
+    // Browser save token data
+    window.localStorage.setItem('authTokenTest', JSON.stringify(data))
+    // mobile save token data
+    // TODO: test on mobile with browser methode & add mobile methode if nessesary
+  }
 
   /* Events Methodes */
   ionViewDidLoad() {
@@ -39,16 +50,25 @@ export class LoginPage {
   }
 
   onLogin(){
-    console.log('login user ->', this.userForm.value)
-    // this.AuthService.loginUser(this.user.value.email, this.user.value.password)
-    // .then( authData => {
-    //   this.navCtrl.setRoot(TabsPage);
-    // }, error => {
-    //   this.showError( error.message ,false)
-    // });
+    this._Auth.loginUser(this.userForm.value)
+         .subscribe(
+           result  => {
+             if(result.success === true){
+               console.log('Success: Auth token-> ',result)
+               this.saveToken(result.token)
+             }
+             else {
+               console.log('Failed to Auth:-> ', result)
+               this.showError(result.message, false)
+             }
+           },
+           error =>  {
+             this.errorMessage = <any>error
+             console.log('Request Error:-> ', this.errorMessage)
+           });
   }
 
-  /* ErrorsHandler Methode */
+  /* ErrorHandler Methode */
   showError(text:string,hideLoading:boolean=true) {
     if (hideLoading === true){
       setTimeout(() => {

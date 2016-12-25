@@ -13,7 +13,10 @@ import { MyApp } from './app.component';
 import { LoginPage } from '../pages/login/login';
 import { HomePage } from '../pages/home/home';
 import { TodoEditPage } from '../pages/todo-edit/todo-edit';
+
 import {TodoService} from '../providers/todo-service';
+import { AuthService } from '../providers/auth-service';
+
 
 @NgModule({
   declarations: [
@@ -37,7 +40,8 @@ import {TodoService} from '../providers/todo-service';
       provide: ErrorHandler,
       useClass: IonicErrorHandler
     },
-    TodoService
+    TodoService,
+    AuthService
   ]
 })
 export class AppModule {}
