@@ -1,32 +1,24 @@
-/**
-* @Author: Nicolas Fazio <webmaster-fazio>
-* @Date:   25-12-2016
-* @Email:  contact@nicolasfazio.ch
-* @Last modified by:   webmaster-fazio
-* @Last modified time: 26-12-2016
-*/
-
 import { Component } from '@angular/core';
 import { NavController, LoadingController, AlertController } from 'ionic-angular';
 import {Validators, FormBuilder } from '@angular/forms';
-//import { Storage } from '@ionic/storage';
 
 import { HomePage } from '../home/home';
-import { SignupPage } from '../signup/signup';
 import { AuthService } from '../../providers/auth-service';
+
 /*
-  Generated class for the Login page.
+  Generated class for the Signup page.
 
   See http://ionicframework.com/docs/v2/components/#navigation for more info on
   Ionic pages and navigation.
 */
 @Component({
-  selector: 'page-login',
-  templateUrl: 'login.html'
+  selector: 'page-signup',
+  templateUrl: 'signup.html'
 })
-export class LoginPage {
+export class SignupPage {
 
-  userForm:any;
+
+  signupForm:any;
   loader:any;
   errorMessage:any;
 
@@ -41,50 +33,24 @@ export class LoginPage {
       dismissOnPageChange: true,
     });
     this.loader.present();
-    this.userForm = this._formBuilder.group({
+    this.signupForm = this._formBuilder.group({
       name: ['', Validators.required],
       password: ['', Validators.required],
     });
   }
 
-  /* Core Methode */
-  saveToken(token):void{
-    let data = {
-      'token': token
-    };
-    // Browser save token data
-    window.localStorage.setItem('authTokenTest', JSON.stringify(data))
-    // mobile save token data
-    // TODO: test on mobile with browser methode & add mobile methode if nessesary
-  }
-
   /* Events Methodes */
-  ionViewDidLoad():void{
-    console.log('Hello Login Page');
-    this._Auth.isAuth()
-      .subscribe(
-        result=>{
-          console.log('isAuth -> ', result)
-          if(result != null && result != false ){
-            if(result._id) this.navCtrl.setRoot(HomePage)
-          }
-          else {
-            if(this.loader){
-              this.loader.dismiss();
-            }
-          }
-        },
-        err => {console.log('Error isAuth -> ', err);this.loader.dismiss();}
-      )
+  ionViewDidLoad() {
+    console.log('Hello SignupPage Page');
   }
 
-  onLogin():void{
-    this._Auth.loginUser(this.userForm.value)
+  onSignup():void{
+    this._Auth.loginUser(this.signupForm.value)
          .subscribe(
            result  => {
              if(result.success === true){
                console.log('Success: Auth token-> ',result)
-               this.saveToken(result.token)
+               //this.saveToken(result.token)
                this.navCtrl.setRoot(HomePage)
              }
              else {
@@ -96,10 +62,6 @@ export class LoginPage {
              this.errorMessage = <any>error
              console.log('Error request :-> ', this.errorMessage)
            });
-  }
-
-  onGoSignup(){
-    this.navCtrl.push(SignupPage)
   }
 
   /* ErrorHandler Methode */
@@ -116,4 +78,5 @@ export class LoginPage {
     });
     alert.present();
   }
+  
 }

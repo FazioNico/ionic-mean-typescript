@@ -11,6 +11,7 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 
 import { LoginPage } from '../pages/login/login';
+import { SignupPage } from '../pages/signup/signup';
 import { HomePage } from '../pages/home/home';
 import { TodoEditPage } from '../pages/todo-edit/todo-edit';
 
@@ -22,6 +23,7 @@ import { AuthService } from '../providers/auth-service';
   declarations: [
     MyApp,
     LoginPage,
+    SignupPage,
     HomePage,
     TodoEditPage
   ],
@@ -32,6 +34,7 @@ import { AuthService } from '../providers/auth-service';
   entryComponents: [
     MyApp,
     LoginPage,
+    SignupPage,
     HomePage,
     TodoEditPage
   ],

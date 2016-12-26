@@ -1,13 +1,5 @@
 <!--
-@Author: Nicolas Fazio <webmaster-fazio>
-@Date:   25-12-2016
-@Email:  contact@nicolasfazio.ch
-@Last modified by:   webmaster-fazio
-@Last modified time: 26-12-2016
--->
-
-<!--
-  Generated template for the Login page.
+  Generated template for the Signup page.
 
   See http://ionicframework.com/docs/v2/components/#navigation for more info on
   Ionic pages and navigation.
@@ -15,18 +7,14 @@
 <ion-header>
 
   <ion-navbar color="primary">
-    <ion-title>login</ion-title>
+    <ion-title>Create account</ion-title>
   </ion-navbar>
 
 </ion-header>
 
-
 <ion-content padding text-center>
-  <div id="logo">
-    <ion-icon color="primary" name="person"></ion-icon>
-  </div>
   <div>
-    <form [formGroup]="userForm">
+    <form [formGroup]="signupForm">
       <ion-list inset>
 
         <ion-item>
@@ -41,10 +29,6 @@
 
       </ion-list>
     </form>
-    <button ion-button block round (click)="onLogin()" [disabled]="!userForm.valid">Login</button>
-    <p>
-      Dont've a account? <br>
-      <span (click)="onGoSignup()" color="primary">Go to signup</span>
-    </p>
+    <button ion-button block round (click)="onSignup()" [disabled]="!signupForm.valid">Signup</button>
   </div>
 </ion-content>
