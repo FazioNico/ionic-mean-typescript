@@ -59,7 +59,7 @@ export class AuthService {
     let headers:Headers = new Headers({'Content-Type': 'application/x-www-form-urlencoded'});
     let options:RequestOptions = new RequestOptions({ headers: headers });
 
-    let userReady:string = `name=${user.name}&password=${user.password}`;
+    let userReady:string = `email=${user.email}&password=${user.password}`;
     //console.log('UserReady-> ', userReady)
     // Post request with data & headers
     return this.http.post(this.AuthUrl, userReady, options)

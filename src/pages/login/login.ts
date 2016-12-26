@@ -42,7 +42,7 @@ export class LoginPage {
     });
     this.loader.present();
     this.userForm = this._formBuilder.group({
-      name: ['', Validators.required],
+      email: ['', Validators.required],
       password: ['', Validators.required],
     });
   }
