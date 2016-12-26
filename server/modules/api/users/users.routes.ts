@@ -24,6 +24,7 @@ export class UsersRoutes {
     routes() {
         var controller = this._UsersController;
         // Public Endpoints:
+        router.get('/setup', log, controller.setup)
         router.post('/auth', log, controller.auth)
         router.get('/isauth', log, controller.isAuth)
         router.post('/signup', log, controller.signup)

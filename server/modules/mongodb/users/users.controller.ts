@@ -19,21 +19,21 @@ const toObjectId = (_id: string): mongoose.Types.ObjectId =>{
 }
 
 export const userController = {
-	// setup : (req,res) =>{
-  //
-	// 	(new User(<IUserModel>req.body))
-  //   // create a sample user
-  //   var nick = <IUserModel>new User({
-  //     name: 'toto',
-  //     password: '12345',
-  //     admin: true
-  //   });
-  //   nick.save((err, doc:IUserModel) => {
-	// 		if(err) return console.log(err);
-  //     console.log('User saved successfully');
-  //     res.json({ success: true });
-	// 	})
-	// },
+	setup : (req,res) =>{
+
+		(new User(<IUserModel>req.body))
+    // create a sample user
+    var nick = <IUserModel>new User({
+      email: 'aa@aa.ch',
+      password: 'A123456',
+      admin: true
+    });
+    nick.save((err, doc:IUserModel) => {
+			if(err) return console.log(err);
+      console.log('User saved successfully');
+      res.json({ success: true });
+		})
+	},
 
 	signup : (req,res) =>{
     console.log('req.body-> ', req.body);
@@ -41,13 +41,13 @@ export const userController = {
     // check existe user in DB
     // before add new user
     // find the user
-    User.findOne({name: req.body.name}, (err, user:IUserModel)=> {
+    User.findOne({email: req.body.email}, (err, user:IUserModel)=> {
       if (err) throw err;
       if (!user) {
         // No existing user found, create the new user
         // create user
         var newuser = <IUserModel>new User({
-          name: req.body.name,
+          email: req.body.email,
           password: req.body.password,
           admin: false
         });
@@ -86,7 +86,7 @@ export const userController = {
 	},
   auth: (req,res)=> {
     // find the user
-    User.findOne({name: req.body.name}, (err, user:IUserModel)=> {
+    User.findOne({email: req.body.email}, (err, user:IUserModel)=> {
       if (err) throw err;
       if (!user) {
         res.json({ success: false, message: 'Authentication failed. User not found.' });
@@ -119,7 +119,7 @@ export const userController = {
       let docsReady = docs.map((user)=>{
         return {
           _id: user._id,
-          name: user.name,
+          email: user.email,
           admin: user.admin
         }
       })
