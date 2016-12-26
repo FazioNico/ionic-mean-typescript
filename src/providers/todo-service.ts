@@ -31,8 +31,8 @@ export class TodoService {
   // Add a todo-edit
   add(todo: string): Observable<any> {
     console.log('add item-> ', todo)
-    let body = JSON.stringify({description: todo});
-    let headers = new Headers({'Content-Type': 'application/json'});
+    let body:string = JSON.stringify({description: todo});
+    let headers:Headers = new Headers({'Content-Type': 'application/json'});
 
     return this.http.post(this.todosUrl, body, {headers: headers})
                     .map(res => res.json())
@@ -40,10 +40,10 @@ export class TodoService {
   }
 
   // Update a todo
-  update(todo: any) {
-    let url = `${this.todosUrl}/${todo._id}`; //see mdn.io/templateliterals
-    let body = JSON.stringify(todo)
-    let headers = new Headers({'Content-Type': 'application/json'});
+  update(todo: any):Observable<any> {
+    let url:string = `${this.todosUrl}/${todo._id}`; //see mdn.io/templateliterals
+    let body:string = JSON.stringify(todo)
+    let headers:Headers = new Headers({'Content-Type': 'application/json'});
 
     return this.http.put(url, body, {headers: headers})
                     .map(() => todo) //See mdn.io/arrowfunctions
@@ -51,15 +51,16 @@ export class TodoService {
   }
 
   // Delete a todo
-  delete(todo: any) {
-    let url = `${this.todosUrl}/${todo._id}`;
-    let headers = new Headers({'Content-Type': 'application/json'});
+  delete(todo: any):Observable<any> {
+    let url:string = `${this.todosUrl}/${todo._id}`;
+    let headers:Headers = new Headers({'Content-Type': 'application/json'});
 
     return this.http.delete(url, headers)
                .catch(this.handleError);
   }
 
-  handleError(error) {
+  // Handle Observable Error with type return
+  handleError(error):Observable<Error> {
       console.error(error);
       return Observable.throw(error.json().error || 'Server error');
   }
