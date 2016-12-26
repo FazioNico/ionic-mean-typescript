@@ -1,3 +1,11 @@
+/**
+* @Author: Nicolas Fazio <webmaster-fazio>
+* @Date:   26-12-2016
+* @Email:  contact@nicolasfazio.ch
+* @Last modified by:   webmaster-fazio
+* @Last modified time: 26-12-2016
+*/
+
 import { Component } from '@angular/core';
 import { NavController, LoadingController, AlertController } from 'ionic-angular';
 import {Validators, FormBuilder } from '@angular/forms';
@@ -16,7 +24,6 @@ import { AuthService } from '../../providers/auth-service';
   templateUrl: 'signup.html'
 })
 export class SignupPage {
-
 
   signupForm:any;
   loader:any;
@@ -42,17 +49,19 @@ export class SignupPage {
   }
 
   onSignup():void{
+    // Display loader
     this.loader = this.loadCtrl.create({
       dismissOnPageChange: true,
     });
     this.loader.present();
+    // Send data formto _Auth.signUp() Observabe service
     this._Auth.signUp(this.signupForm.value)
          .subscribe(
            result  => {
-            //console.log('signup result-> ', result)
+             // If user is successly regitred
              if(result.success === true){
                console.log('Success: signup result -> ',result)
-               // TODO: create user token & redirect user on HomePage
+               // create user token & redirect user on HomePage
                this.createToken(this.signupForm.value)
              }
              else {
@@ -60,6 +69,7 @@ export class SignupPage {
                this.showError(result.message, true)
              }
            },
+           // if error with signup() request
            error =>  {
              this.errorMessage = <any>error
              console.log('Error request :-> ', this.errorMessage)
@@ -68,6 +78,7 @@ export class SignupPage {
 
   /* Core Methodes */
   createToken(userData):void{
+    // subscribe to loginUser() with form.data
     this._Auth.loginUser(userData)
          .subscribe(
            result  => {
@@ -88,6 +99,7 @@ export class SignupPage {
   }
 
   saveToken(token):void{
+    // Format data before storage
     let data = {
       'token': token
     };
