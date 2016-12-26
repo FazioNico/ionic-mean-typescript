@@ -45,16 +45,20 @@ export class SignupPage {
   }
 
   onSignup():void{
-    this._Auth.loginUser(this.signupForm.value)
+    this._Auth.signUp(this.signupForm.value)
          .subscribe(
            result  => {
+            //console.log('signup result-> ', result)
              if(result.success === true){
-               console.log('Success: Auth token-> ',result)
-               //this.saveToken(result.token)
-               this.navCtrl.setRoot(HomePage)
+               console.log('Success: signup result -> ',result)
+               // TODO: create user token & redirect user on HomePage
+              //  this.createToken(result)
+              //  .then(_=>{
+              //    this.navCtrl.setRoot(HomePage)
+              //  })
              }
              else {
-               console.log('Failed to Auth:-> ', result)
+               console.log('Failed to signup:-> ', result)
                this.showError(result.message, false)
              }
            },
@@ -78,5 +82,5 @@ export class SignupPage {
     });
     alert.present();
   }
-  
+
 }

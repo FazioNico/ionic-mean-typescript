@@ -24,7 +24,7 @@ export class AuthService {
 
   private AuthUrl:string = "http://localhost:8080/auth"
   private isAuthUrl:string = "http://localhost:8080/isauth"
-  private signUphUrl:string = "http://localhost:8080/signup"
+  private signUpUrl:string = "http://localhost:8080/signup"
 
   constructor(public http: Http) {
 
@@ -63,12 +63,10 @@ export class AuthService {
   }
 
   signUp(user): Observable<any> {
-    let headers = new Headers({'Content-Type': 'application/x-www-form-urlencoded'});
-    let options = new RequestOptions({ headers: headers });
+    let body = JSON.stringify(user);
+    let headers = new Headers({'Content-Type': 'application/json'});
 
-    let userReady = `name=${user.name}&password=${user.password}`;
-    //console.log('UserReady-> ', userReady)
-    return this.http.post(this.signUphUrl, userReady, options)
+    return this.http.post(this.signUpUrl, body, {headers: headers})
                     .map(this.extractData)
                     .catch(this.handleError);
   }

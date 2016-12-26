@@ -35,6 +35,34 @@ export const userController = {
 	// 	})
 	// },
 
+	signup : (req,res) =>{
+    console.log('req.body-> ', req.body);
+		//(new User(<IUserModel>req.body))
+    // check existe user in DB
+    // before add new user
+    // find the user
+    User.findOne({name: req.body.name}, (err, user:IUserModel)=> {
+      if (err) throw err;
+      if (!user) {
+        // No existing user found, create the new user
+        // create user
+        var newuser = <IUserModel>new User({
+          name: req.body.name,
+          password: req.body.password,
+          admin: false
+        });
+        newuser.save((err, doc:IUserModel) => {
+    			if(err) return console.log(err);
+          console.log('User saved successfully');
+          res.json({ success: true, message: 'User created successfully' });
+    		})
+      }
+      else {
+        // User alerady existe un DB
+        res.json({ success: false, message: 'User already existe'});
+      }
+    });
+	},
   isAuth: (req,res)=> {
     Authentication.checkAuthentication(req,  (isAuth: boolean|any): void =>{
       //console.log('looog-> ', doc)
