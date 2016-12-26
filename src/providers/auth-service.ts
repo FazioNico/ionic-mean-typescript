@@ -22,8 +22,9 @@ import 'rxjs/Rx';
 @Injectable()
 export class AuthService {
 
-  private AuthUrl = "http://localhost:8080/auth"
-  private isAuthUrl = "http://localhost:8080/isauth"
+  private AuthUrl:string = "http://localhost:8080/auth"
+  private isAuthUrl:string = "http://localhost:8080/isauth"
+  private signUphUrl:string = "http://localhost:8080/signup"
 
   constructor(public http: Http) {
 
@@ -57,6 +58,17 @@ export class AuthService {
     let userReady = `name=${user.name}&password=${user.password}`;
     //console.log('UserReady-> ', userReady)
     return this.http.post(this.AuthUrl, userReady, options)
+                    .map(this.extractData)
+                    .catch(this.handleError);
+  }
+
+  signUp(user): Observable<any> {
+    let headers = new Headers({'Content-Type': 'application/x-www-form-urlencoded'});
+    let options = new RequestOptions({ headers: headers });
+
+    let userReady = `name=${user.name}&password=${user.password}`;
+    //console.log('UserReady-> ', userReady)
+    return this.http.post(this.signUphUrl, userReady, options)
                     .map(this.extractData)
                     .catch(this.handleError);
   }
