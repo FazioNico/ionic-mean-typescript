@@ -29,10 +29,7 @@ export class SignupPage {
     public loadCtrl:LoadingController,
     private _Auth: AuthService
   ) {
-    this.loader = this.loadCtrl.create({
-      dismissOnPageChange: true,
-    });
-    this.loader.present();
+
     this.signupForm = this._formBuilder.group({
       name: ['', Validators.required],
       password: ['', Validators.required],
@@ -45,6 +42,10 @@ export class SignupPage {
   }
 
   onSignup():void{
+    this.loader = this.loadCtrl.create({
+      dismissOnPageChange: true,
+    });
+    this.loader.present();
     this._Auth.signUp(this.signupForm.value)
          .subscribe(
            result  => {
@@ -52,20 +53,48 @@ export class SignupPage {
              if(result.success === true){
                console.log('Success: signup result -> ',result)
                // TODO: create user token & redirect user on HomePage
-              //  this.createToken(result)
-              //  .then(_=>{
-              //    this.navCtrl.setRoot(HomePage)
-              //  })
+               this.createToken(this.signupForm.value)
              }
              else {
                console.log('Failed to signup:-> ', result)
-               this.showError(result.message, false)
+               this.showError(result.message, true)
              }
            },
            error =>  {
              this.errorMessage = <any>error
              console.log('Error request :-> ', this.errorMessage)
            });
+  }
+
+  /* Core Methodes */
+  createToken(userData):void{
+    this._Auth.loginUser(userData)
+         .subscribe(
+           result  => {
+             if(result.success === true){
+               console.log('Success: Auth token-> ',result)
+               this.saveToken(result.token)
+               this.navCtrl.setRoot(HomePage)
+             }
+             else {
+               console.log('Failed to Auth:-> ', result)
+               this.showError(result.message, true)
+             }
+           },
+           error =>  {
+             this.errorMessage = <any>error
+             console.log('Error request :-> ', this.errorMessage)
+           });
+  }
+
+  saveToken(token):void{
+    let data = {
+      'token': token
+    };
+    // Browser save token data
+    window.localStorage.setItem('authTokenTest', JSON.stringify(data))
+    // mobile save token data
+    // TODO: test on mobile with browser methode & add mobile methode if nessesary
   }
 
   /* ErrorHandler Methode */
