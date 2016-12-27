@@ -60,6 +60,12 @@ export const userController = {
       if (err) throw err;
       if (!user) {
         // No existing user found, create the new user
+        // Check password length is >= 6
+        if(req.body.password.length < 6) {
+          console.log('User saved successfully');
+          res.json({ success: false, message: 'Error password require min 6 characters' });
+          return
+        }
         // Use bcrypte to encrypte user password
         bcrypt.hash(req.body.password, 10, (err, hash) =>{
           if(err){

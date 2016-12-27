@@ -42,8 +42,8 @@ export class LoginPage {
     });
     this.loader.present();
     this.userForm = this._formBuilder.group({
-      email: ['', Validators.required],
-      password: ['', Validators.required],
+      email: ['', Validators.compose([Validators.required, Validators.minLength(5)])],
+      password: ['', Validators.compose([Validators.required, Validators.minLength(6), Validators.maxLength(10)])],
     });
   }
 
