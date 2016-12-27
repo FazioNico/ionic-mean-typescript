@@ -10,7 +10,6 @@ import { Component } from '@angular/core';
 import { NavController, LoadingController, AlertController } from 'ionic-angular';
 import {Validators, FormBuilder } from '@angular/forms';
 
-import { HomePage } from '../home/home';
 import { AuthService } from '../../providers/auth-service';
 
 /*

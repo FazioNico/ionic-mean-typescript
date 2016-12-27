@@ -11,7 +11,6 @@ import { NavController, LoadingController, AlertController } from 'ionic-angular
 import {Validators, FormBuilder } from '@angular/forms';
 //import { Storage } from '@ionic/storage';
 
-import { HomePage } from '../home/home';
 import { SignupPage } from '../signup/signup';
 import { AuthService } from '../../providers/auth-service';
 /*
