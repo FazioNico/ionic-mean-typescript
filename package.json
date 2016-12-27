@@ -6,7 +6,7 @@
   "main": "server.js",
   "scripts": {
     "dev": "npm run server-build",
-    "server-build": "tsc server.ts -w & npm run server-watch",
+    "server-build": "tsc server.ts --moduleResolution node t.ts -w & npm run server-watch",
     "server-watch": "nodemon ./server.js  & npm run front",
     "front": "ionic serve",
     "prod": "ntsc server.ts && ionic serve",
