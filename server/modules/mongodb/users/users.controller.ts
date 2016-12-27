@@ -8,6 +8,7 @@
 
 import * as mongoose from 'mongoose';
 import * as jwt from 'jsonwebtoken';
+import * as bcrypt from 'bcrypt';
 
 import { User, IUserModel } from './user.model';
 import {Authentication} from '../../authentication';
@@ -21,18 +22,32 @@ const toObjectId = (_id: string): mongoose.Types.ObjectId =>{
 export const userController = {
 	setup : (req,res) =>{
 
-		(new User(<IUserModel>req.body))
-    // create a sample user
-    var nick = <IUserModel>new User({
-      email: 'aa@aa.ch',
-      password: 'A123456',
-      admin: true
+
+    // Use bcrypte to encrypte user password
+    bcrypt.hash('A123456', 10, (err, hash) =>{
+      if(err){
+        console.log('User saved successfully');
+        res.json({ success: false, message: 'Error with bcrypt hash password' });
+        return
+      }
+      // Store hash in your password DB.
+      // create a sample user
+      //(new User(<IUserModel>req.body))
+      var newuser = <IUserModel>new User({
+        email: 'aa@aa.ch',
+        password: hash,
+        admin: true
+      });
+      newuser.save((err, doc:IUserModel) => {
+  			if(err) {
+          console.log('save user mokup-> ',err)
+          res.json({ success: false, message: 'Error with save user mokup' });
+          return;
+        };
+        console.log('User saved successfully');
+        res.json({ success: true });
+  		})
     });
-    nick.save((err, doc:IUserModel) => {
-			if(err) return console.log(err);
-      console.log('User saved successfully');
-      res.json({ success: true });
-		})
 	},
 
 	signup : (req,res) =>{
@@ -45,17 +60,26 @@ export const userController = {
       if (err) throw err;
       if (!user) {
         // No existing user found, create the new user
-        // create user
-        var newuser = <IUserModel>new User({
-          email: req.body.email,
-          password: req.body.password,
-          admin: false
-        });
-        newuser.save((err, doc:IUserModel) => {
-    			if(err) return console.log(err);
-          console.log('User saved successfully');
-          res.json({ success: true, message: 'User created successfully' });
-    		})
+        // Use bcrypte to encrypte user password
+        bcrypt.hash(req.body.password, 10, (err, hash) =>{
+          if(err){
+            console.log('User saved successfully');
+            res.json({ success: false, message: 'Error with bcrypt hash password' });
+            return
+          }
+          // create user
+          var newuser = <IUserModel>new User({
+            email: req.body.email,
+            password: hash,
+            admin: false
+          });
+          newuser.save((err, doc:IUserModel) => {
+      			if(err) return console.log(err);
+            console.log('User saved successfully');
+            res.json({ success: true, message: 'User created successfully' });
+      		})
+        })
+
       }
       else {
         // User alerady existe un DB
@@ -93,22 +117,36 @@ export const userController = {
       }
       else if (user) {
         // check if password matches
-        if (user.password != req.body.password) {
-          res.json({ success: false, message: 'Authentication failed. Wrong password.' });
-        }
-        else {
-          // if user is found and password is right
-          // create a token
-          var token = jwt.sign(user, secretTokenKey, {
-            expiresIn: 86400000 // expires in 24 hours
-          });
-          // return the information including token as JSON
-          res.json({
-            success: true,
-            message: 'Enjoy your token!',
-            token: token
-          });
-        }
+        // Load hash from your password DB.
+        // Use bcrypte to compare user password with hash
+        bcrypt.compare(req.body.password, user.password, (err, result)=> {
+            // res == true
+            if(err){
+              res.json({ success: false, message: 'Authentication failed. Error with compare password: Error-> ', err });
+              return;
+            }
+            if (result === false) {
+              res.json({ success: false, message: 'Authentication failed. Wrong password.' });
+            }
+            else if (result === true){
+              // if user is found and password is right
+              // create a token
+              var token = jwt.sign(user, secretTokenKey, {
+                expiresIn: 86400000 // expires in 24 hours
+              });
+              // return the information including token as JSON
+              res.json({
+                success: true,
+                message: 'Enjoy your token!',
+                token: token
+              });
+            }
+            else {
+              res.json({ success: false, message: 'Authentication failed. Error with compare password: res-> ', res });
+              return;
+            }
+
+        });
       }
     });
   },
