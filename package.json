@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "npm run server-build",
     "server-build": "tsc server.ts --moduleResolution node ./**/*.d.ts -w & npm run server-watch",
-    "server-watch": "nodemon ./server.js --ignore src/ --ignore www/ --ignore .*/ & npm run front",
+    "server-watch": "nodemon ./server.js --ignore src/ --ignore www/ --ignore .tmp/ & npm run front",
     "front": "ionic serve",
     "prod": "ntsc server.ts && ionic serve",
     "deploy": "gh-pages -d www",

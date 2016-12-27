@@ -3,7 +3,7 @@
 * @Date:   25-12-2016
 * @Email:  contact@nicolasfazio.ch
 * @Last modified by:   webmaster-fazio
-* @Last modified time: 27-12-2016
+* @Last modified time: 28-12-2016
 */
 
 import * as mongoose from 'mongoose';
@@ -12,8 +12,8 @@ import * as bcrypt from 'bcrypt';
 
 import { User, IUserModel } from './user.model';
 import {Authentication} from '../../authentication';
-// Import secretTokenKey config
-import { secretTokenKey } from "../../../config";
+// Import config
+import { SECRET_TOKEN_KEY, BCRYPT_ROUND, PASSWORD_MIN_LENGHT, JWT_EXPIRE} from "../../../config";
 
 const toObjectId = (_id: string): mongoose.Types.ObjectId =>{
     return mongoose.Types.ObjectId.createFromHexString(_id);
@@ -24,7 +24,7 @@ export const userController = {
 
 
     // Use bcrypte to encrypte user password
-    bcrypt.hash('A123456', 10, (err, hash) =>{
+    bcrypt.hash('A123456', BCRYPT_ROUND, (err, hash) =>{
       if(err){
         console.log('User saved successfully');
         res.json({ success: false, message: 'Error with bcrypt hash password' });
@@ -61,13 +61,13 @@ export const userController = {
       if (!user) {
         // No existing user found, create the new user
         // Check password length is >= 6
-        if(req.body.password.length < 6) {
+        if(req.body.password.length < PASSWORD_MIN_LENGHT) {
           console.log('User saved successfully');
           res.json({ success: false, message: 'Error password require min 6 characters' });
           return
         }
         // Use bcrypte to encrypte user password
-        bcrypt.hash(req.body.password, 10, (err, hash) =>{
+        bcrypt.hash(req.body.password, BCRYPT_ROUND, (err, hash) =>{
           if(err){
             console.log('User saved successfully');
             res.json({ success: false, message: 'Error with bcrypt hash password' });
@@ -137,8 +137,8 @@ export const userController = {
             else if (result === true){
               // if user is found and password is right
               // create a token
-              var token = jwt.sign(user, secretTokenKey, {
-                expiresIn: 86400000 // expires in 24 hours
+              var token = jwt.sign(user, SECRET_TOKEN_KEY, {
+                expiresIn: JWT_EXPIRE // expires in 24 hours
               });
               // return the information including token as JSON
               res.json({

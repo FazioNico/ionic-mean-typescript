@@ -8,7 +8,7 @@
 
 import { verify } from 'jsonwebtoken';
 // Import secretTokenKey config
-import { secretTokenKey } from "../config";
+import { SECRET_TOKEN_KEY } from "../config";
 
 
 // export the authentication class:
@@ -22,7 +22,7 @@ export class Authentication {
       // there is no token!
       cb(false);
     } else {
-      verify(token, secretTokenKey,  (err: Error, decoded: any): void => {
+      verify(token, SECRET_TOKEN_KEY,  (err: Error, decoded: any): void => {
         if (err) {
           cb(false);
         } else {

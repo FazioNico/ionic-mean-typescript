@@ -8,7 +8,7 @@
 
 import * as mongoose from 'mongoose';
 // Import MongoDB config
-import { dbHost, dbName } from "../../config";
+import { DB_HOST, DB_NAME } from "../../config";
 
 /*
   Use TypeScript with mongoose models
@@ -18,7 +18,7 @@ import { dbHost, dbName } from "../../config";
 */
 
 // Define MongoDB path url
-const MONGODB_URI:string = process.env.MONGODB_URI || `${dbHost}/${dbName}`;
+const MONGODB_URI:string = process.env.MONGODB_URI || `${DB_HOST}/${DB_NAME}`;
 
 export const mongoDbConnect = ()=>{
 

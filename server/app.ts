@@ -20,7 +20,7 @@ import { APIRoutes }  from "./modules/routes/apiRoute";
 import { DataBase }  from "./modules/database";
 import { log }  from "./modules/log";
 // Import secretTokenKey config
-import { secretTokenKey } from "./config";
+import { SECRET_TOKEN_KEY } from "./config";
 
 export class Server{
 
@@ -54,7 +54,7 @@ export class Server{
       // use bodyParser middleware to decode urlencoded parameters
       .use(bodyParser.urlencoded({extended: false}))
       // secret variable for jwt
-      .set('superSecret', secretTokenKey)
+      .set('superSecret', SECRET_TOKEN_KEY)
       // use morgan to log requests to the console
       .use(morgan('dev'))
       .use(cors())

@@ -9,7 +9,6 @@
 import * as express from 'express';
 import { TodosRoutes }  from "../api/todos/todosRoutes";
 import { UsersRoutes }  from "../api/users/users.routes";
-import { log } from '../log';
 
 const app = express();
 
