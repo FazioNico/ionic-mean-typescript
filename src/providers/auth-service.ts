@@ -10,9 +10,11 @@ import {Injectable} from '@angular/core';
 import {Http, Headers, RequestOptions, Response} from '@angular/http';
 
 import {Observable} from 'rxjs/Observable';
+import {Subject} from 'rxjs/Subject';
 import 'rxjs/add/operator/map';
 import 'rxjs/Rx';
 
+const STORAGE_ITEM:string = 'authTokenTest';
 /*
   Generated class for the Auth provider.
 
@@ -23,25 +25,24 @@ import 'rxjs/Rx';
 @Injectable()
 export class AuthService {
 
-  private AuthUrl:string = "http://localhost:8080/auth"
+  private authUrl:string = "http://localhost:8080/auth"
   private isAuthUrl:string = "http://localhost:8080/isauth"
   private signUpUrl:string = "http://localhost:8080/signup"
+
+  private loggedIn:boolean = false;
+  private logger:Subject<boolean> = new Subject<boolean>();
 
   constructor(public http: Http) {
   }
 
   /* Methode to check if user is currenty loged with jwt */
-  isAuth():Observable<boolean|any>{
-    // Get storage data
-    let storage:any = JSON.parse(localStorage.getItem('authTokenTest'))
+  isAuth(): Observable<boolean> {
+    let storage:any = JSON.parse(localStorage.getItem(STORAGE_ITEM))
     // if storage not found
     if(!storage){
-      return Observable.create( (observer)=> {
-          observer.next(false);
-          observer.complete();
-          // Note that this is optional, you do not have to return this if you require no cleanup
-          //return () => { console.log('unsubscribe'); };
-      });
+      this.loggedIn = false;
+      this.logger.next(this.loggedIn);
+      return this.logger.asObservable();
     }
     // If storage is found
     //console.log('token-> ', storage.token)
@@ -49,9 +50,38 @@ export class AuthService {
     let headers:Headers = new Headers({'cache-control': 'no-cache','x-access-token': storage.token});
     let options:RequestOptions = new RequestOptions({ headers: headers });
     // send request to Auth service
-    return this.http.get(this.isAuthUrl, options)
-               .map(res => res.json())
-               .catch(this.handleError);
+    this.http.get(this.isAuthUrl, options)
+             .map(res => res.json())
+             .catch(this.handleError)
+             .subscribe((result)=>{
+                 if(result._id) {
+                     console.log('subscribe-> ', result._id)
+                     this.loggedIn = true;
+                     this.logger.next(this.loggedIn);
+                     return
+                 }
+                 this.loggedIn = false;
+                 this.logger.next(this.loggedIn);
+               },
+               err => {
+                 this.loggedIn = false;
+                 this.logger.next(this.loggedIn);
+               }
+             );
+    return this.logger.asObservable();
+  }
+
+  /* Token managers Methodes */
+  saveToken(providerResponse: string):void {
+    localStorage.setItem(STORAGE_ITEM, providerResponse);
+    this.loggedIn = true;
+    this.logger.next(this.loggedIn);
+  }
+
+  dellToken():void {
+    localStorage.removeItem(STORAGE_ITEM);
+    this.loggedIn = false;
+    this.logger.next(this.loggedIn);
   }
 
   /* Methode to log the user with name & password coming from loginForm */
@@ -62,7 +92,7 @@ export class AuthService {
     let userReady:string = `email=${user.email}&password=${user.password}`;
     //console.log('UserReady-> ', userReady)
     // Post request with data & headers
-    return this.http.post(this.AuthUrl, userReady, options)
+    return this.http.post(this.authUrl, userReady, options)
                     .map(this.extractData)
                     .catch(this.handleError);
   }

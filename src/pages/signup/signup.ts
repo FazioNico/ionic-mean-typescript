@@ -85,7 +85,7 @@ export class SignupPage {
              if(result.success === true){
                console.log('Success: Auth token-> ',result)
                this.saveToken(result.token)
-               this.navCtrl.setRoot(HomePage)
+               //this.navCtrl.setRoot(HomePage)
              }
              else {
                console.log('Failed to Auth:-> ', result)
@@ -103,8 +103,9 @@ export class SignupPage {
     let data = {
       'token': token
     };
+    this._Auth.saveToken(JSON.stringify(data))
     // Browser save token data
-    window.localStorage.setItem('authTokenTest', JSON.stringify(data))
+    //window.localStorage.setItem('authTokenTest', JSON.stringify(data))
     // mobile save token data
     // TODO: test on mobile with browser methode & add mobile methode if nessesary
   }

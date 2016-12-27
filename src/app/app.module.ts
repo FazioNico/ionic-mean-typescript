@@ -15,6 +15,8 @@ import { SignupPage } from '../pages/signup/signup';
 import { HomePage } from '../pages/home/home';
 import { TodoEditPage } from '../pages/todo-edit/todo-edit';
 
+import { HeaderContent } from '../components/header-content/header-content';
+
 import {TodoService} from '../providers/todo-service';
 import { AuthService } from '../providers/auth-service';
 
@@ -25,7 +27,8 @@ import { AuthService } from '../providers/auth-service';
     LoginPage,
     SignupPage,
     HomePage,
-    TodoEditPage
+    TodoEditPage,
+    HeaderContent
   ],
   imports: [
     IonicModule.forRoot(MyApp)

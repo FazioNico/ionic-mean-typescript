@@ -6,7 +6,7 @@
 * @Last modified time: 27-12-2016
 */
 
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavController, LoadingController, AlertController } from 'ionic-angular';
 import {Validators, FormBuilder } from '@angular/forms';
 //import { Storage } from '@ionic/storage';
@@ -24,11 +24,13 @@ import { AuthService } from '../../providers/auth-service';
   selector: 'page-login',
   templateUrl: 'login.html'
 })
-export class LoginPage {
+export class LoginPage implements OnInit{
 
   userForm:any;
   loader:any;
   errorMessage:any;
+
+  loggedIn:boolean;
 
   constructor(
     public navCtrl: NavController,
@@ -37,45 +39,23 @@ export class LoginPage {
     public loadCtrl:LoadingController,
     private _Auth: AuthService
   ) {
-    this.loader = this.loadCtrl.create({
-      dismissOnPageChange: true,
-    });
-    this.loader.present();
+    // this.loader = this.loadCtrl.create({
+    //   dismissOnPageChange: true,
+    // });
+    // this.loader.present();
     this.userForm = this._formBuilder.group({
       email: ['', Validators.compose([Validators.required, Validators.minLength(5)])],
       password: ['', Validators.compose([Validators.required, Validators.minLength(6), Validators.maxLength(10)])],
     });
   }
 
-  /* Core Methode */
-  saveToken(token):void{
-    let data = {
-      'token': token
-    };
-    // Browser save token data
-    window.localStorage.setItem('authTokenTest', JSON.stringify(data))
-    // mobile save token data
-    // TODO: test on mobile with browser methode & add mobile methode if nessesary
+  ngOnInit() {
   }
+
 
   /* Events Methodes */
   ionViewDidLoad():void{
     console.log('Hello Login Page');
-    this._Auth.isAuth()
-      .subscribe(
-        result=>{
-          console.log('isAuth -> ', result)
-          if(result != null && result != false ){
-            if(result._id) this.navCtrl.setRoot(HomePage)
-          }
-          else {
-            if(this.loader){
-              this.loader.dismiss();
-            }
-          }
-        },
-        err => {console.log('Error isAuth -> ', err);this.loader.dismiss();}
-      )
   }
 
   onLogin():void{
@@ -85,7 +65,7 @@ export class LoginPage {
              if(result.success === true){
                console.log('Success: Auth token-> ',result)
                this.saveToken(result.token)
-               this.navCtrl.setRoot(HomePage)
+               //this.navCtrl.setRoot(HomePage)
              }
              else {
                console.log('Failed to Auth:-> ', result)
@@ -100,6 +80,18 @@ export class LoginPage {
 
   onGoSignup(){
     this.navCtrl.push(SignupPage)
+  }
+
+  /* Core Methode */
+  saveToken(token):void{
+    let data = {
+      'token': token
+    };
+    this._Auth.saveToken(JSON.stringify(data))
+    // Browser save token data
+    //window.localStorage.setItem('authTokenTest', JSON.stringify(data))
+    // mobile save token data
+    // TODO: test on mobile with browser methode & add mobile methode if nessesary
   }
 
   /* ErrorHandler Methode */
