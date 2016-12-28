@@ -10,7 +10,9 @@ MEIN Stack - The MEAN Stack with Ionic &amp; Typescript
 ## Overview
 MEIN Stack is a TypeScript Full Stack MongoDB + ExpressJS + Angular2 + NodeJS with Ionic 2 Framework to provide multi platform application.
 
-It's a simple todo application exemple with server-side Users JWT authentification & usign RxJS Observable on client-side to help you to start your project on the right way.
+It's a simple todo application exemple with server-side Users JWT authentification & using RxJS Observable on client-side.
+
+Hop is help you to start your project on the right way.
 
 ## Prerequisites
 - NVM - [Download](https://github.com/creationix/nvm) & Install Node Version Manage
@@ -23,7 +25,8 @@ It's a simple todo application exemple with server-side Users JWT authentificati
 
 ## Quick Start
 - run mongodb by open CLI from `./mongodb/bin` folder and run `$ ./mongod --dbpath ../data/db`
-- open this project in your IDE and install all node_modules from IDE CLI `$ nvm use 7.2`, `$ npm install` and run server with `$ npm run dev`
+- open this project in your IDE and install all node_modules from IDE CLI `$ nvm use 7.2`, `$ npm install`
+- run project (server+client side) with `$ npm run dev`
 - if you've trouble, try the manual start
 
 ## Manual Start
@@ -38,26 +41,66 @@ It's a simple todo application exemple with server-side Users JWT authentificati
 
 
 ## Start Production mode
-- config mongodb URL
+- config mongodb URL & all providers URL Endpoints on client side
 - open this project in your IDE and install all node_modules from IDE CLI `$ nvm use 7.2`, `$ npm install` and run server with `$ npm run prod`
 - if you've trouble, try the manual start without `$ nodemon  --watch server.js` and remove `-w` from `$ ntsc server.ts -w`.
 
-## Server API End Points
-- index endpoints: `http://localhost:8080/api/todos` & Request Method `$_GET` and `$_POST`
-- item endpoints: `http://localhost:8080/api/todos/:id` & Request Method `$_GET` and `$_POST`with $params `{ _id: NUMBER_ID }`
+
+## Server REST API Endpoints
+
+````
+TODOS Endpoints
+
+  path: http://localhost:8080/todos
+  autenticate: false
+  methode: $_GET / $_POST
+
+  path: http://localhost:8080/todos/:id
+  autenticate: false
+  methode: $_GET / $_POST / $_DELETE
+
+
+AUTH Endpoints
+
+  path: http://localhost:8080/auth
+  autenticate: false
+  methode: $_POST
+
+  path: http://localhost:8080/isauth
+  autenticate: false/true
+  methode: $_GET
+
+  path: http://localhost:8080/signup
+  autenticate: false
+  methode: $_POST
+
+
+USERS Endpoints
+
+  path: http://localhost:8080/users
+  autenticate: true
+  methode: $_GET
+
+
+  path: http://localhost:8080/users/:id
+  autenticate: true
+  methode: $_GET
+
+````
+
 
 ## Deploy Application
 Deploy runing task
 
 ### Github (Front-end)
-- config mongodb URL client side
+- config all providers url endpoints on client side
 - open this project in your IDE and install all node_modules from IDE CLI `$ nvm use 7.2`, `$ npm install` and run server with `$ npm run delpoy` this will push `./www` folder on your Github gh-pages branch repository
 
 ### Heroku (Back-end)
 *coming soon...*
 
 ### IOS (Front-end)
-- config mongodb URL client side
+- config all providers url endpoints on client side
 - open this project in your IDE and install all node_modules from IDE CLI `$ nvm use 7.2`, `$ npm install` and run server with `$ npm ionic build ios` to build xCode Files
 - publish on Itunes Connect
 
