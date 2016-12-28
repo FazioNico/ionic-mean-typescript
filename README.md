@@ -4,11 +4,13 @@
 <img src="http://code.runnable.com/images/provider-icons/icon-node.js.svg" width="80">
 <img src="http://cloudoki.com/images/frameworks/ionic.png" width="80">
 
-# Ionic MEAN Stack Typescript
+# Ionic MEAN/MEIN Stack Typescript
 MEIN Stack - The MEAN Stack with Ionic &amp; Typescript
 
 ## Overview
 MEIN Stack is a TypeScript Full Stack MongoDB + ExpressJS + Angular2 + NodeJS with Ionic 2 Framework to provide multi platform application.
+
+It's a simple todo application exemple with server-side Users JWT authentification & usign RxJS Observable on client-side to help you to start your project on the right way.
 
 ## Prerequisites
 - NVM - [Download](https://github.com/creationix/nvm) & Install Node Version Manage
@@ -21,23 +23,23 @@ MEIN Stack is a TypeScript Full Stack MongoDB + ExpressJS + Angular2 + NodeJS wi
 
 ## Quick Start
 - run mongodb by open CLI from `./mongodb/bin` folder and run `$ ./mongod --dbpath ../data/db`
-- open this project in your IDE and install all node_modules from IDE CLI `$ nvm use 7`, `$ npm install` and run server with `$ npm run dev`
+- open this project in your IDE and install all node_modules from IDE CLI `$ nvm use 7.2`, `$ npm install` and run server with `$ npm run dev`
 - if you've trouble, try the manual start
 
 ## Manual Start
 - open CLI from `./mongodb/bin` folder and run`$ ./mongod --dbpath ../data/db`
-- open this project in your IDE and install all node_modules from IDE CLI `$ nvm use 7` and `$ npm install`
-- now run Node Server from IDE CLI `$ ntsc server.ts -w`
+- open this project in your IDE and install all node_modules from IDE CLI `$ nvm use 7.2` and `$ npm install`
+- now run Node Server from IDE CLI `$ tsc server.ts --moduleResolution node ./**/*.d.ts -w`
 - Typescript=> if trouble withtypes definition, use `$ npm install @types/{{TYPE_MODULE}} --save-dev
 ` for each module needed *(CAREFUL: to not install es6 @types => do not install cause it mek trouble with ionic build script. If you've a issue, pull request.)*
-- and then open new IDE CLI and run `$ nodemon  --watch server.js`
-- now again open new IDE CLI window and final run `$ nvm use 7` and `$ ionic serve` for building application
+- and then open new IDE CLI and run `$ nodemon ./server.js --ignore src/ --ignore www/ --ignore .tmp/`
+- now again open new IDE CLI window and final run `$ nvm use 7.2` and `$ ionic serve` for building application
 - you'r now ready to start to work ;)
 
 
 ## Start Production mode
 - config mongodb URL
-- open this project in your IDE and install all node_modules from IDE CLI `$ nvm use 7`, `$ npm install` and run server with `$ npm run prod`
+- open this project in your IDE and install all node_modules from IDE CLI `$ nvm use 7.2`, `$ npm install` and run server with `$ npm run prod`
 - if you've trouble, try the manual start without `$ nodemon  --watch server.js` and remove `-w` from `$ ntsc server.ts -w`.
 
 ## Server API End Points
@@ -47,16 +49,16 @@ MEIN Stack is a TypeScript Full Stack MongoDB + ExpressJS + Angular2 + NodeJS wi
 ## Deploy Application
 Deploy runing task
 
-### Github
-- config mongodb URL
-- open this project in your IDE and install all node_modules from IDE CLI `$ nvm use 7`, `$ npm install` and run server with `$ npm run delpoy` this will push `./www` folder on your Github gh-pages branch repository
+### Github (Front-end)
+- config mongodb URL client side
+- open this project in your IDE and install all node_modules from IDE CLI `$ nvm use 7.2`, `$ npm install` and run server with `$ npm run delpoy` this will push `./www` folder on your Github gh-pages branch repository
 
 ### Heroku (Back-end)
 *coming soon...*
 
 ### IOS (Front-end)
-- config mongodb URL
-- open this project in your IDE and install all node_modules from IDE CLI `$ nvm use 7`, `$ npm install` and run server with `$ npm ionic build ios` to build xCode Files
+- config mongodb URL client side
+- open this project in your IDE and install all node_modules from IDE CLI `$ nvm use 7.2`, `$ npm install` and run server with `$ npm ionic build ios` to build xCode Files
 - publish on Itunes Connect
 
 ## About author
