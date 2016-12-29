@@ -3,7 +3,7 @@
 * @Date:   14-12-2016
 * @Email:  contact@nicolasfazio.ch
 * @Last modified by:   webmaster-fazio
-* @Last modified time: 14-12-2016
+* @Last modified time: 29-12-2016
 */
 
 import { Component } from '@angular/core';
@@ -37,12 +37,14 @@ export class MyApp {
   }
 
   ngOnInit() {
+    // Check user authentication on ngOnInit
     this._Auth.isAuth()
       .subscribe(loggedIn => {
         this.loggedIn = loggedIn;
         //console.log('this.loggedIn type-> ', typeof loggedIn)
         if(this.loggedIn === true ) this.rootPage = HomePage;
         if(this.loggedIn === false )this.rootPage = LoginPage;
+        // If cb is not a boolean => handleError
         if(typeof loggedIn === 'string') this.handleError(loggedIn)
       },
       err => {
@@ -53,6 +55,7 @@ export class MyApp {
     );
   }
 
+  /* Errors Method */
   handleError(err){
     // open ionic alert dialog
     let msg:string[] = [];
@@ -61,6 +64,7 @@ export class MyApp {
       msg.push(vals.join(''))
     })
 
+    // Create alert to display errors
     let alert = this.alertCtrl.create({
       title: 'Erreur',
       subTitle: msg.join(' <br/> '),
