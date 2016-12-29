@@ -105,7 +105,7 @@ export const userController = {
         // the user has a proper token
         // Send request to database
     		User.findById(toObjectId(isAuth.user._id), (err, doc:IUserModel) => {
-    			if(err) return console.log(err);
+    			if(err) res.json(err);
           if(doc === null){
             res.json({ success: false, message: 'isAuth failed. User not exist', user: isAuth.user});
             return console.log('isAuth failed. User not exist')

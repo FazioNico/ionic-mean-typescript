@@ -60,12 +60,12 @@ export class AuthService {
                      this.logger.next(this.loggedIn);
                      return
                  }
-                 this.loggedIn = false;
                  this.logger.next(this.loggedIn);
                },
                err => {
                  this.loggedIn = false;
-                 this.logger.next(this.loggedIn);
+                 let errorMsg = err[0]
+                 this.logger.next(err);
                }
              );
     return this.logger.asObservable();
@@ -117,15 +117,16 @@ export class AuthService {
 
   /* Methode to handleError for Observable and return error as observable */
   handleError (error: Response | any):Observable<any> {
+    //console.log('err-> ', error)
     let errMsg: string;
     if (error instanceof Response) {
       const body = error.json() || '';
       const err = body.error || JSON.stringify(body);
-      errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
+      errMsg = `${err}`;
     } else {
       errMsg = error.message ? error.message : error.toString();
     }
-    console.error(errMsg);
+    //console.error(errMsg);
     return Observable.throw(errMsg);
   }
 

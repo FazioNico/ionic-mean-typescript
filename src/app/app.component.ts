@@ -7,7 +7,7 @@
 */
 
 import { Component } from '@angular/core';
-import { Platform } from 'ionic-angular';
+import { Platform, AlertController } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
 
 import { LoginPage } from '../pages/login/login';
@@ -20,11 +20,12 @@ import { AuthService } from '../providers/auth-service';
 })
 export class MyApp {
 
-  loggedIn:boolean;
+  loggedIn:boolean|string;
   rootPage:any = LoginPage;
 
   constructor(
-    platform: Platform,
+    public platform: Platform,
+    public alertCtrl: AlertController,
     private _Auth: AuthService
   ) {
     platform.ready().then(() => {
@@ -39,13 +40,32 @@ export class MyApp {
     this._Auth.isAuth()
       .subscribe(loggedIn => {
         this.loggedIn = loggedIn;
-        console.log('this.loggedIn-> ', this.loggedIn)
+        //console.log('this.loggedIn type-> ', typeof loggedIn)
         if(this.loggedIn === true ) this.rootPage = HomePage;
-        if(this.loggedIn === false )this.rootPage = LoginPage
+        if(this.loggedIn === false )this.rootPage = LoginPage;
+        if(typeof loggedIn === 'string') this.handleError(loggedIn)
       },
       err => {
         console.log('Error isAuth -> ', err);
+        this.handleError(err)
+
       }
     );
+  }
+
+  handleError(err){
+    // open ionic alert dialog
+    let msg:string[] = [];
+    JSON.parse(err).map(error => {
+      let vals = Object.keys(error).map(key => error[key])
+      msg.push(vals.join(''))
+    })
+
+    let alert = this.alertCtrl.create({
+      title: 'Erreur',
+      subTitle: msg.join(' <br/> '),
+      buttons: ['OK']
+    });
+    alert.present();
   }
 }

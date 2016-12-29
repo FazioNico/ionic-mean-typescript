@@ -73,17 +73,18 @@ export class Server{
           // REST API Endpoints
           this.app.use( new APIRoutes().routes());
         })
-        .catch(err => {
+        .catch(error => {
           // DB connection Error => load only server route
-          console.log(err)
+          console.log(error)
           // Server Endpoints
           this.app.use(new ServerRoutes().routes());
-          return err
+          return error
         })
-        .then(err => {
+        .then(error => {
           // Then catch 404 & db error connection
           this.app.use((req, res)=>{
-            let message:any[] = (err)? [{error: 'Page not found'}, {err}] : [{error: 'Page not found'}]
+            console.log(error)
+            let message:any[] = (error)? [{error: 'Page not found'}, {error}] : [{error: 'Page not found'}]
             res.status(404).json(message);
           })
         })
