@@ -3,7 +3,7 @@
 * @Date:   25-12-2016
 * @Email:  contact@nicolasfazio.ch
 * @Last modified by:   webmaster-fazio
-* @Last modified time: 26-12-2016
+* @Last modified time: 29-12-2016
 */
 
 import {Injectable} from '@angular/core';
@@ -60,7 +60,9 @@ export class AuthService {
                      this.logger.next(this.loggedIn);
                      return
                  }
+                 // if no _id send event with default value // false
                  this.logger.next(this.loggedIn);
+                 return
                },
                err => {
                  this.loggedIn = false;
