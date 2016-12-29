@@ -2,11 +2,13 @@
 // @Date:   14-12-2016
 // @Email:  contact@nicolasfazio.ch
 // @Last modified by:   webmaster-fazio
-// @Last modified time: 14-12-2016
+// @Last modified time: 29-12-2016
 
 page-home {
+
+
   h2 {
-      color: color($colors, dark);
+      color: color($colors, light);
       font-size: 1.7rem;
       margin:10px 0 0;
       small {
@@ -14,7 +16,39 @@ page-home {
         font-weight: normal;
       }
     }
+    ion-item-options .button {
+      padding: 0 1.7em;
+    }
+    .list-md ion-item-sliding {
+        background-color: rgba(255, 255, 255, 0.3);
+    }
+    #addTodo, #addTodo > div {
+      #clearInput{
+          background: #fff;
+          color: #387ef5;
+      }
+      background: color($colors, primary);
+      color:    #fff;
+      ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+          color:    lighten(color($colors, light), 40%);
+      }
+      :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+         color:    lighten(color($colors, light), 40%);
+         opacity:  1;
+      }
+      ::-moz-placeholder { /* Mozilla Firefox 19+ */
+         color:    lighten(color($colors, light), 40%);
+         opacity:  1;
+      }
+      :-ms-input-placeholder { /* Internet Explorer 10-11 */
+         color:    lighten(color($colors, light), 40%);
+      }
 
+      ion-item, ion-input{
+        color: lighten(color($colors, light), 40%);
+        background: transparent;
+      }
+    }
     ion-list {
       >ion-item-sliding {
         border-bottom: 1px solid color($colors, light);

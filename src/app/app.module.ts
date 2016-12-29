@@ -20,6 +20,10 @@ import { HeaderContent } from '../components/header-content/header-content';
 import {TodoService} from '../providers/todo-service';
 import { AuthService } from '../providers/auth-service';
 
+const ionicAppConfig:Object = {
+  tabsPlacement: 'bottom',
+  mode: 'md'
+};
 
 @NgModule({
   declarations: [
@@ -31,7 +35,7 @@ import { AuthService } from '../providers/auth-service';
     HeaderContent
   ],
   imports: [
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp, ionicAppConfig)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
