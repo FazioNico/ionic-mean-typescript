@@ -3,7 +3,7 @@
 * @Date:   21-12-2016
 * @Email:  contact@nicolasfazio.ch
 * @Last modified by:   webmaster-fazio
-* @Last modified time: 24-12-2016
+* @Last modified time: 29-12-2016
 */
 
 import * as mongoose from 'mongoose';
@@ -33,7 +33,6 @@ export const todoController = {
 		})
 	},
 	addItem : (req,res) =>{
-
 		(new Todo(<ITodoModel>req.body)).save((err, doc:ITodoModel) => {
 			if(err) return console.log(err);
 			res.json(doc);

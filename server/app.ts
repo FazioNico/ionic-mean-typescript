@@ -3,7 +3,7 @@
 * @Date:   21-12-2016
 * @Email:  contact@nicolasfazio.ch
 * @Last modified by:   webmaster-fazio
-* @Last modified time: 24-12-2016
+* @Last modified time: 29-12-2016
 */
 
 /// <reference path="./@types/index.d.ts" />
@@ -28,7 +28,6 @@ export class Server{
   private server:http.Server;
   private root:string;
   private port:number|string|boolean;
-  private db: boolean;
 
 
   constructor(){
@@ -40,9 +39,11 @@ export class Server{
   }
 
   private config():void{
-    this.db = false;
+    // define the app.server endpoints folder
     this.root = path.join(__dirname, '../www')
+    // define prot & normalize value
     this.port = this.normalizePort(process.env.PORT|| 8080);
+    // use the root path defined
     this.app.use(express.static(this.root))
   }
 
@@ -57,6 +58,7 @@ export class Server{
       .set('superSecret', SECRET_TOKEN_KEY)
       // use morgan to log requests to the console
       .use(morgan('dev'))
+      // cors domaine origin
       .use(cors())
   }
 
@@ -81,7 +83,7 @@ export class Server{
         .then(err => {
           // Then catch 404 & db error connection
           this.app.use((req, res)=>{
-            let message = (err)? [{error: 'Page not found'}, {err}] : [{error: 'Page not found'}]
+            let message:any[] = (err)? [{error: 'Page not found'}, {err}] : [{error: 'Page not found'}]
             res.status(404).json(message);
           })
         })
@@ -89,7 +91,7 @@ export class Server{
 
   private onError(error: NodeJS.ErrnoException): void {
     if (error.syscall !== 'listen') throw error;
-    let bind = (typeof this.port === 'string') ? 'Pipe ' + this.port : 'Port ' + this.port;
+    let bind:string = (typeof this.port === 'string') ? 'Pipe ' + this.port : 'Port ' + this.port;
     switch(error.code) {
       case 'EACCES':
         console.error(`${bind} requires elevated privileges`);

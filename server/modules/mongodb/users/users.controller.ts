@@ -3,7 +3,7 @@
 * @Date:   25-12-2016
 * @Email:  contact@nicolasfazio.ch
 * @Last modified by:   webmaster-fazio
-* @Last modified time: 28-12-2016
+* @Last modified time: 29-12-2016
 */
 
 import * as mongoose from 'mongoose';
@@ -20,9 +20,13 @@ const toObjectId = (_id: string): mongoose.Types.ObjectId =>{
 }
 
 export const userController = {
+  // Route to add mokup user in MongoDB
+  /*
+    User connection info:
+      email:  aa@aa.ch
+      pwd:    A123456
+  */
 	setup : (req,res) =>{
-
-
     // Use bcrypte to encrypte user password
     bcrypt.hash('A123456', BCRYPT_ROUND, (err, hash) =>{
       if(err){
@@ -174,7 +178,7 @@ export const userController = {
     Authentication.checkAuthentication(req,  (isAuth: boolean|any): void =>{
       //console.log('looog-> ', doc)
       if (isAuth) {
-        console.log('isAuth-> ', isAuth.user._id, 'req.params.id-> ',  req.params.id)
+        //console.log('isAuth-> ', isAuth.user._id, 'req.params.id-> ',  req.params.id)
         // the user has a proper token & is the same of the req.params.id: let's call next
         if(isAuth.user._id === req.params.id){
           // Send request to database
