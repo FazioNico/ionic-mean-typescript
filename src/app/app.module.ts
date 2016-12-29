@@ -20,38 +20,35 @@ import { HeaderContent } from '../components/header-content/header-content';
 import {TodoService} from '../providers/todo-service';
 import { AuthService } from '../providers/auth-service';
 
+const pages:Array<any> = [
+  LoginPage,
+  SignupPage,
+  HomePage,
+  TodoEditPage
+];
+const components:Array<any> = [
+  HeaderContent
+];
 const ionicAppConfig:Object = {
   tabsPlacement: 'bottom',
   mode: 'md'
 };
-
-@NgModule({
-  declarations: [
-    MyApp,
-    LoginPage,
-    SignupPage,
-    HomePage,
-    TodoEditPage,
-    HeaderContent
-  ],
-  imports: [
-    IonicModule.forRoot(MyApp, ionicAppConfig)
-  ],
-  bootstrap: [IonicApp],
-  entryComponents: [
-    MyApp,
-    LoginPage,
-    SignupPage,
-    HomePage,
-    TodoEditPage
-  ],
-  providers: [
+const providers:Array<any> = [
     {
       provide: ErrorHandler,
       useClass: IonicErrorHandler
     },
     TodoService,
     AuthService
-  ]
+];
+
+@NgModule({
+  declarations: [MyApp, ...pages, ...components],
+  imports: [
+    IonicModule.forRoot(MyApp, ionicAppConfig)
+  ],
+  bootstrap: [IonicApp],
+  entryComponents: [MyApp, ...pages],
+  providers: [...providers]
 })
 export class AppModule {}
