@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<widget id="ch.nicolasfazio.ionic-mean-typescript" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="ch.nicolasfazio.ionic-mean-typescript" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
   <name>ionic-mean-typescript</name>
   <description>MEIN Stack - The MEAN Stack with Ionic &amp; Typescript</description>
   <author email="contact@nicolasfazio.ch" href="http://nicolasfazio.ch/">Nicolas Fazio</author>
